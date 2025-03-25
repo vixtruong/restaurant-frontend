@@ -1,0 +1,26 @@
+<p-toolbar [style]="{'padding': '1rem 1rem 1rem 1.5rem' }">
+    <ng-template #start>
+        <div class="flex items-center gap-2 ml-5">
+            <p-avatar
+                image="https://cdni.iconscout.com/illustration/premium/thumb/restaurant-building-illustration-download-in-svg-png-gif-file-formats--delicious-logo-shop-entrance-restaurants-pack-buildings-illustrations-9625906.png?f=webp"
+                class="mr-2" size="large" shape="circle" />
+        </div>
+    </ng-template>
+
+    <ng-template #center>
+        <div class="flex gap-4">
+            <p-iconfield iconPosition="left">
+                <p-inputicon styleClass="pi pi-search" />
+                <input type="text" pInputText placeholder="Search" />
+            </p-iconfield>
+            <p-select [(ngModel)]="selectedCategory" [options]="categories" optionLabel="name"
+                optionValue="value" placeholder="Select a Category" class="w-full md:w-56" />
+        </div>
+    </ng-template>
+
+    <ng-template #end>
+        <div class="flex items-center gap-2 mr-5">
+            <p-button label="Share" severity="contrast" size="small" />
+        </div>
+    </ng-template>
+</p-toolbar>

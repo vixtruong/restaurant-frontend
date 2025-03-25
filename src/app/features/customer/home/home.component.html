@@ -1,0 +1,6 @@
+<app-navbar></app-navbar>
+<div class="p-10 grid grid-cols-4 gap-4">
+    <ng-container *ngFor="let item of menuItems">
+        <app-menu-item-card [item]="item"></app-menu-item-card>
+    </ng-container>
+</div>
