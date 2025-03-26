@@ -2,6 +2,12 @@
 @import "tailwindcss";
 @import "tailwindcss-primeui";
 
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
 body {
   font-family: "Open Sans", sans-serif;
 }
