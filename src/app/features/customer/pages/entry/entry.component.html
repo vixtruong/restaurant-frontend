@@ -23,6 +23,17 @@
                         Phone number is required.
                     </small>
                 </div>
+                <div class="flex flex-col gap-1 mb-4">
+                    <label for="tableNumber">Table Number</label>
+                    <input pInputText id="tableNumber" formControlName="tableNumber" type="text"
+                        maxlength="10" pattern="[0-9]*"
+                        (keypress)="preventNonNumericInput($event)" />
+                    <small
+                        *ngIf="entryForm.get('tableNumber')?.invalid && entryForm.get('tableNumber')?.touched"
+                        class="text-red-500">
+                        Table number is required.
+                    </small>
+                </div>
                 <div class="flex flex-col gap-1">
                     <p-button type="submit" label="Submit"></p-button>
                 </div>

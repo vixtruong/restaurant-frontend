@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://myrestaurantapi.com/api'
+  baseUrl: 'https://myrestaurantapi.com/api'
 };

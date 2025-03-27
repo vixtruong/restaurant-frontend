@@ -1,3 +1,4 @@
+<app-order-cart [(visible)]="visible"></app-order-cart>
 <p-toolbar [style]="{'padding': '1rem 1rem 1rem 1.5rem' }">
     <ng-template #start>
         <div class="flex items-center gap-2 ml-5">
@@ -11,16 +12,19 @@
         <div class="flex gap-4">
             <p-iconfield iconPosition="left">
                 <p-inputicon styleClass="pi pi-search" />
-                <input type="text" pInputText placeholder="Search" />
+                <input type="text" [(ngModel)]="searchQuery" (ngModelChange)="onInputSearchQuery()"
+                    pInputText placeholder="Search" />
             </p-iconfield>
             <p-select [(ngModel)]="selectedCategory" [options]="categories" optionLabel="name"
-                optionValue="value" placeholder="Select a Category" class="w-full md:w-56" />
+                optionValue="value" placeholder="Select a Category"
+                (ngModelChange)="onCategoryChange()" class="w-full md:w-56" />
         </div>
     </ng-template>
 
     <ng-template #end>
         <div class="flex items-center gap-2 mr-5">
-            <p-button label="Share" severity="contrast" size="small" />
+            <p-button label="Order Card" icon="pi pi-cart-arrow-down" (onClick)="visible = !visible"
+                severity="warn" />
         </div>
     </ng-template>
 </p-toolbar>

@@ -1,4 +1,4 @@
-<p-card *ngIf="item.available" [style]="{ width: '20rem', overflow: 'hidden' }">
+<p-card *ngIf="item.available" [style]="{ overflow: 'hidden' }">
     <ng-template #header>
         <img alt="Card" class="w-full" src="{{item.imgUrl}}" />
     </ng-template>
@@ -13,7 +13,7 @@
     <ng-template #footer>
         <div class="flex gap-4 mt-1">
             <p-inputnumber [(ngModel)]="quantity" [showButtons]="true" buttonLayout="horizontal"
-                min="1" max="10" spinnerMode="horizontal" inputId="vertical"
+                min="1" max="20" spinnerMode="horizontal" inputId="vertical"
                 [inputStyle]="{ width: '3rem' }">
                 <ng-template #incrementbuttonicon>
                     <span class="pi pi-plus"></span>
@@ -22,7 +22,8 @@
                     <span class="pi pi-minus"></span>
                 </ng-template>
             </p-inputnumber>
-            <p-button label="Order" class="w-full" styleClass="w-full" />
+            <p-button label="Order" class="w-full" styleClass="w-full"
+                (onClick)="addMenuItemToCart()" />
         </div>
     </ng-template>
 </p-card>
