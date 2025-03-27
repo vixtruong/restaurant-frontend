@@ -1,0 +1,25 @@
+<div class="flex items-center gap-4 w-full"
+    [ngClass]="{ 'opacity-50 pointer-events-none': disabled }">
+    <img class="w-14 h-14 object-cover rounded-md border border-gray-300" [src]="orderItem.imgUrl"
+        [alt]="orderItem.name" />
+
+    <div class="flex-1 flex flex-col gap-1 overflow-hidden">
+        <span class="font-semibold text-sm text-gray-900 truncate">{{ orderItem.name }}</span>
+        <div class="flex items-center gap-1 text-xs text-gray-500">
+            <i class="pi pi-tag text-xs"></i>
+            <span>{{ orderItem.category }}</span>
+        </div>
+
+        <div class="flex items-center gap-2 mt-1">
+            <button class="px-2 bg-gray-200 rounded hover:bg-gray-300 text-sm"
+                (click)="decreaseQuantity()">-</button>
+            <span class="text-sm font-medium w-6 text-center">{{ orderItem.quantity }}</span>
+            <button class="px-2 bg-gray-200 rounded hover:bg-gray-300 text-sm"
+                (click)="increaseQuantity()">+</button>
+        </div>
+    </div>
+
+    <span class="text-sm font-bold text-gray-800 whitespace-nowrap">
+        {{ (orderItem.quantity*orderItem.price).toLocaleString('vi-VN') }}₫
+    </span>
+</div>

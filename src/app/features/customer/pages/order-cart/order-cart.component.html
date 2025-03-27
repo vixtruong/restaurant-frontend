@@ -1,0 +1,36 @@
+<p-drawer header="Order Cart" [(visible)]="visible" (visibleChange)="visibleChange.emit($event)"
+    position="right">
+    <ul class="flex pt-4 pb-20 flex-col gap-3 bg-white">
+        <li *ngFor="let product of orderItems"
+            class="flex items-center gap-4 p-3 rounded-lg border border-gray-200 shadow-sm hover:shadow-md hover:bg-gray-50 transition-all duration-200"
+            [ngClass]="{
+                'ring-2 ring-primary': selectedId === product.id && !product.confirmed,
+                'pointer-events-none opacity-50': product.confirmed || isSubmitting }"
+            (contextmenu)="(!product.confirmed) && onContextMenu($event, product)">
+
+            <app-order-item-card [orderItem]="product"
+                [disabled]="isSubmitting || product.confirmed"></app-order-item-card>
+        </li>
+    </ul>
+
+    <p-contextmenu #cm [model]="items" (onHide)="onHide()" appendTo="body">
+        <ng-template pTemplate="item" let-item>
+            <a pRipple
+                class="flex items-center p-contextmenu-item-link px-3 py-2 hover:bg-gray-100 rounded">
+                <span [class]="item.icon"></span>
+                <span class="ml-2 text-sm">{{ item.label }}</span>
+            </a>
+        </ng-template>
+    </p-contextmenu>
+
+    <div class="fixed bottom-0 right-0 bg-white w-full p-4 z-10">
+        <div class="flex justify-between items-center">
+            <span class="font-semibold text-gray-700">Total:
+                {{getTotalPrice().toLocaleString('vi-VN')}}đ</span>
+            <p-button (onClick)="confirmOrder()"
+                class="bg-primary text-white font-medium rounded hover:bg-primary-600 transition">
+                Confirm Order
+            </p-button>
+        </div>
+    </div>
+</p-drawer>

@@ -1,4 +1,4 @@
-export class EntryRequest {
+export class EntryRequestDto {
   fullName: string;
   phoneNumber: string;
 

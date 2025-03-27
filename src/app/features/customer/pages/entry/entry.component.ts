@@ -4,12 +4,10 @@ import { CommonModule } from '@angular/common';
 import { InputTextModule } from 'primeng/inputtext';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
-
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { EntryRequest } from '../../../core/models/class/entry-request';
 
-import { AuthService } from '../../../core/services/auth.service';
-
+import { AuthService } from '../../../../core/services/auth.service';
+import { EntryRequestDto } from '../../../../core/dtos/entry-request.dto';
 
 @Component({
   selector: 'app-entry',
@@ -25,7 +23,8 @@ export class EntryComponent {
   constructor(private fb: FormBuilder) {
     this.entryForm = fb.group({
       fullName: ['', Validators.required],
-      phoneNumber: ['', Validators.required]
+      phoneNumber: ['', Validators.required],
+      tableNumber: ['', Validators.required]
     });
   }
 
@@ -38,13 +37,21 @@ export class EntryComponent {
 
   onSubmit() {
     if (this.entryForm.valid) {
-      const { fullName, phoneNumber } = this.entryForm.value;
-      const entryRequest = new EntryRequest(fullName, phoneNumber);
-      this.authService.entry(entryRequest).subscribe({
+      const { fullName, phoneNumber, tableNumber } = this.entryForm.value;
+
+      localStorage.setItem('tableNumber', tableNumber);
+
+      const entryRequest = new EntryRequestDto(fullName, phoneNumber);
+      this.authService.customerEntry(entryRequest).subscribe({
         next: (res) => {
           localStorage.setItem('accessToken', res.accessToken);
           localStorage.setItem('refreshToken', res.refreshToken);
           console.log('✅ Đăng nhập thành công');
+
+          const payload = this.decodeJwt(res.accessToken);
+          const userId = payload?.nameid;
+
+          localStorage.setItem('userId', userId);
 
           this.router.navigate(['/home']);
         },
@@ -58,4 +65,11 @@ export class EntryComponent {
       });
     }
   }
+
+  decodeJwt(token: string): any {
+    const payload = token.split('.')[1];
+    const decoded = atob(payload);
+    return JSON.parse(decoded);
+  }
+  
 }
