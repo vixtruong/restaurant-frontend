@@ -5,7 +5,7 @@ import { ButtonModule } from 'primeng/button';
 
 import { MenuItemService } from '../../../../core/services/menu-item.service';
 import { CommonModule } from '@angular/common';
-import { MenuItem } from '../../../../core/models/class/menu-item.model';
+import { MenuItem } from '../../../../core/models/menu-item.model';
 import { MenuCardItemComponent } from "../../components/menu-item-card/menu-item-card.component";
 
 @Component({

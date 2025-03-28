@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, Observable } from 'rxjs';
+import { catchError, map, Observable, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { EntryRequestDto } from '../dtos/entry-request.dto';
 import { jwtDecode } from 'jwt-decode';
 import { Router } from '@angular/router';
+import { LoginRequestDto } from '../dtos/login-request.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ import { Router } from '@angular/router';
 
 export class AuthService {
   private baseUrl = environment.baseUrl;
-  private apiUrl = `${this.baseUrl}/auth`
+  private apiUrl = `${this.baseUrl}/auth`;
   constructor(private http: HttpClient, private router: Router) { }
 
   getAccessToken(): string | null {
@@ -26,14 +27,48 @@ export class AuthService {
   refreshToken(): Observable<string> {
     const refreshToken = localStorage.getItem('refreshToken');
     return this.http.post<any>(`${this.apiUrl}/refresh`, { refreshToken }).pipe(
-      map(res => {
+      map((res: any) => {
         localStorage.setItem('accessToken', res.accessToken);
         localStorage.setItem('refreshToken', res.refreshToken);
+        console.log(res.accessToken);
         return res.accessToken;
+      }),
+      catchError(err => {
+        this.logout();
+        return throwError(() => err);
       })
     );
   }
-  
+
+  login(loginRequest: LoginRequestDto) {
+    return this.http.post<any>(`${this.apiUrl}/login`, loginRequest).subscribe({
+      next: res => {
+        this.setAccessToken(res.accessToken);
+        localStorage.setItem('refreshToken', res.refreshToken);
+        console.log('✅ Đăng nhập thành công');
+
+        const token = this.getAccessToken();
+
+        if (token) {
+          const payload = this.decodeJwt(token);
+          const role = payload?.role;
+
+          const userId = payload?.nameid;
+
+          localStorage.setItem('userId', userId);
+
+          localStorage.setItem('role', role);
+        }
+
+        // this.router.navigate(['/dashboard']);
+      },
+      error: err => {
+        console.log("Fail log in!", err);
+        alert('Đăng nhập thất bại. Vui lòng thử lại!');
+      },
+      complete: () => console.log('Complete login request')
+    });
+  }
   
   logout() {
     const token = localStorage.getItem('accessToken');
@@ -52,11 +87,31 @@ export class AuthService {
     }
   }
 
-  customerEntry(data: EntryRequestDto): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/entry`, data);
+  customerEntry(data: EntryRequestDto) {
+    return this.http.post<any>(`${this.apiUrl}/entry`, data).subscribe({
+      next: (res) => {
+        localStorage.setItem('accessToken', res.accessToken);
+        localStorage.setItem('refreshToken', res.refreshToken);
+        console.log('✅ Đăng nhập thành công');
+
+        const payload = this.decodeJwt(res.accessToken);
+        const userId = payload?.nameid;
+
+        localStorage.setItem('userId', userId);
+
+        this.router.navigate(['/home']);
+      },
+      error: (err) => {
+        console.error('❌ Đăng nhập thất bại:', err);
+        alert('Đăng nhập thất bại. Vui lòng thử lại!');
+      },
+      complete: () => {
+        console.log('🔁 Hoàn tất xử lý entry request.');
+      }
+    });
   }
   
-  isCustomerAuthenticated(): boolean {
+  isAuthenticated(): boolean {
     const token = localStorage.getItem('accessToken');
     if (!token) return false;
 
@@ -72,5 +127,16 @@ export class AuthService {
       console.error('❌ Lỗi khi decode token:', error);
       return false;
     }
+  }
+
+  isTokenExpired(token: string): boolean {
+    const deocdedToken: any = jwtDecode(token);
+    return (deocdedToken.exp * 1000) < Date.now();
+  }
+
+  decodeJwt(token: string): any {
+    const payload = token.split('.')[1];
+    const decoded = atob(payload);
+    return JSON.parse(decoded);
   }
 }

@@ -1,4 +1,4 @@
-import { MenuCategory } from "../../../shared/constants/menu.constants";
+import { MenuCategory } from "../../shared/constants/menu.constants";
 
 export class MenuItem {
   readonly id: number;

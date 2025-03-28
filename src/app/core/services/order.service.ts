@@ -5,7 +5,7 @@ import { environment } from '../../../environments/environment';
 import { CartService } from './cart.service';
 import { OrderItemDto } from '../dtos/order-item.dto';
 import { OrderRequestDto } from '../dtos/order-request.dto';
-import { OrderItem } from '../models/class/order-item.model';
+import { OrderItem } from '../models/order-item.model';
 
 @Injectable({
   providedIn: 'root'

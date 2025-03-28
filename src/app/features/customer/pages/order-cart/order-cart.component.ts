@@ -5,7 +5,7 @@ import { ButtonModule } from 'primeng/button';
 import { ContextMenu, ContextMenuModule } from 'primeng/contextmenu';
 import { BadgeModule } from 'primeng/badge'
 
-import { OrderItem } from '../../../../core/models/class/order-item.model';
+import { OrderItem } from '../../../../core/models/order-item.model';
 import { OrderItemCardComponent } from "../../components/order-item-card/order-item-card.component";
 import { CartService } from '../../../../core/services/cart.service';
 import { OrderService } from '../../../../core/services/order.service';
