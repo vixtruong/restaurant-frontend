@@ -78,13 +78,15 @@ export class AuthService {
       const payload = JSON.parse(atob(token.split('.')[1]));
       role = payload?.role;
     }
-    localStorage.clear();
+    
 
     if (role === 'Customer') {
       this.router.navigate(['/404']);
     } else {
       this.router.navigate(['/login']);
     }
+
+    localStorage.clear();
   }
 
   customerEntry(data: EntryRequestDto) {

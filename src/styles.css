@@ -8,10 +8,6 @@ body {
   margin: 0;
 }
 
-body {
-  font-family: "Open Sans", sans-serif;
-}
-
 body .p-inputtext:focus:enabled,
 body .p-inputwrapper-focus { 
   border-color: black !important; 

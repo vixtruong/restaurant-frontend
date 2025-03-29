@@ -1,0 +1,22 @@
+<p-toolbar>
+    <ng-template #start>
+        <div class="flex items-center gap-4 ml-4">
+            <p-button icon="pi pi-bars" [rounded]="true" [text]="true"
+                (onClick)="onToggleClick()" />
+            <a (click)="onClickLogo()" class="flex items-center gap-4">
+                <p-avatar
+                    image="https://cdni.iconscout.com/illustration/premium/thumb/restaurant-building-illustration-download-in-svg-png-gif-file-formats--delicious-logo-shop-entrance-restaurants-pack-buildings-illustrations-9625906.png?f=webp"
+                    class="mr-2" size="large" shape="circle" />
+                <h4 class="text-lg">RESTAURANT</h4>
+            </a>
+        </div>
+    </ng-template>
+
+    <ng-template #center>
+
+    </ng-template>
+
+    <ng-template #end>
+
+    </ng-template>
+</p-toolbar>

@@ -1,0 +1,83 @@
+<div class="rounded-xl p-6 bg-white">
+    <p-toast></p-toast>
+    <form [formGroup]="menuItemFormGroup" (ngSubmit)="onSubmitCreate()"
+        class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <span class="text-xl font-bold md:col-span-3">Add Menu Item</span>
+        <div>
+            <p-floatLabel class="w-full">
+                <input pInputText id="name" formControlName="name" class="w-full"
+                    autocomplete="off" />
+                <label for="name">Food Name</label>
+            </p-floatLabel>
+            <small class="text-red-500 text-sm"
+                *ngIf="menuItemFormGroup.get('name')?.touched && menuItemFormGroup.get('name')?.invalid">
+                Food name is required.
+            </small>
+        </div>
+
+        <div>
+            <p-floatLabel class="w-full">
+                <p-dropdown inputId="category" formControlName="category" [options]="categories"
+                    optionLabel="name" styleClass="w-full" />
+                <label for="category">Category</label>
+            </p-floatLabel>
+            <small class="text-red-500 text-sm"
+                *ngIf="menuItemFormGroup.get('category')?.touched && menuItemFormGroup.get('category')?.invalid">
+                Category is required.
+            </small>
+        </div>
+
+        <div>
+            <p-floatLabel class="w-full">
+                <input pInputText id="price" formControlName="price"
+                    (keypress)="preventNonNumericInput($event)" class="w-full" autocomplete="off" />
+                <label for="price">Price</label>
+            </p-floatLabel>
+            <small class="text-red-500 text-sm"
+                *ngIf="menuItemFormGroup.get('price')?.touched && menuItemFormGroup.get('price')?.invalid">
+                Price is required.
+            </small>
+        </div>
+
+        <div class="md:col-span-3">
+            <p-floatLabel class="w-full">
+                <textarea pTextarea id="description" formControlName="description" rows="3"
+                    class="w-full"></textarea>
+                <label for="description">Description</label>
+            </p-floatLabel>
+            <small class="text-red-500 text-sm"
+                *ngIf="menuItemFormGroup.get('description')?.touched && menuItemFormGroup.get('description')?.invalid">
+                Description is required.
+            </small>
+        </div>
+
+
+        <div class="md:col-span-3" [ngClass]="{ 'pointer-events-none opacity-50': isUploadImage }">
+            <p-fileUpload name="file" url="https://www.primefaces.org/cdn/api/upload.php"
+                [customUpload]="true" (uploadHandler)="onUploadFile($event)" accept="image/*"
+                [maxFileSize]="10000000" mode="advanced">
+                <ng-template pTemplate="empty">
+                    <div>Drag and drop files here to upload.</div>
+                </ng-template>
+
+                <ng-template let-file pTemplate="content">
+                    <span>{{ file.name }} {{ file.size | number }} </span>
+                </ng-template>
+            </p-fileUpload>
+            <small class="text-red-500 text-sm"
+                *ngIf="menuItemFormGroup.get('imgFile')?.touched && menuItemFormGroup.get('imgFile')?.invalid">
+                Food image is required.
+            </small>
+        </div>
+
+        <div class="md:col-span-3 flex justify-center">
+            <p-image [src]="menuItemFormGroup.get('imgFile')?.value" alt="Image" width="250"
+                [preview]="true" />
+        </div>
+
+        <div class="md:col-span-3 flex justify-end">
+            <p-button type="submit" label="Submit" severity="info" />
+        </div>
+
+    </form>
+</div>

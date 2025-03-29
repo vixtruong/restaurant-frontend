@@ -6,6 +6,7 @@ import { ButtonModule } from 'primeng/button';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth.service';
 import { EntryRequestDto } from '../../../core/dtos/entry-request.dto';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-entry',
@@ -16,6 +17,7 @@ import { EntryRequestDto } from '../../../core/dtos/entry-request.dto';
 export class EntryComponent {
   entryForm: FormGroup;
   private authService = inject(AuthService);
+  private router = inject(Router);
 
   constructor(private fb: FormBuilder) {
     this.entryForm = fb.group({
@@ -23,6 +25,12 @@ export class EntryComponent {
       phoneNumber: ['', Validators.required],
       tableNumber: ['', Validators.required]
     });
+  }
+
+  ngOnInit() {
+    if (this.authService.isAuthenticated()) {
+      this.router.navigate(['/home']);
+    }
   }
 
   preventNonNumericInput(event: KeyboardEvent) {

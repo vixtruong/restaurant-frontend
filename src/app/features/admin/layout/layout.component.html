@@ -1,0 +1,24 @@
+<app-topbar class="fixed top-0 left-0 right-0 z-50 bg-white"
+    (menuToggle)="toggleSlidebar()"></app-topbar>
+
+<div class="admin-container bg-gray-200 pt-[64px] h-screen relative">
+
+    <div class="fixed top-[64px] left-0 z-50 w-8/10 sm:w-[350px] h-[calc(100vh-64px)] p-8 transition-transform duration-300 ease-in-out transform"
+        [ngClass]="{
+            'translate-x-0': showSlidebar,
+            '-translate-x-full': !showSlidebar
+            }">
+        <div class="h-full overflow-y-auto scrollbar bg-white border-transparent rounded-lg">
+            <app-slidebar></app-slidebar>
+        </div>
+    </div>
+
+    <div class="transition-all duration-300 h-[calc(100vh-64px)] overflow-y-auto p-8 sm:pl-0"
+        [ngClass]="{
+            'sm:ml-8': true,
+            'sm:ml-[350px]': showSlidebar
+            }">
+        <router-outlet></router-outlet>
+    </div>
+
+</div>
