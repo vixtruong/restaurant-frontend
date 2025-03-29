@@ -4,8 +4,8 @@ import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { FormsModule } from '@angular/forms';
-import { MenuItem } from '../../../../core/models/class/menu-item.model';
-import { OrderItem } from '../../../../core/models/class/order-item.model';
+import { MenuItem } from '../../../../core/models/menu-item.model';
+import { OrderItem } from '../../../../core/models/order-item.model';
 import { CartService } from '../../../../core/services/cart.service';
 
 @Component({

@@ -1,0 +1,7 @@
+::ng-deep tfoot tr,
+::ng-deep tfoot td.custom-footer {
+  border-top: none !important;
+  border-bottom: none !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+}

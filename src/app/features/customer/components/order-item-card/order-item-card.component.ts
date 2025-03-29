@@ -1,6 +1,6 @@
 import { Component, inject, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { OrderItem } from '../../../../core/models/class/order-item.model';
+import { OrderItem } from '../../../../core/models/order-item.model';
 import { CartService } from '../../../../core/services/cart.service';
 
 @Component({

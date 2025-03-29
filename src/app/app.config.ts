@@ -6,22 +6,22 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
 import { routes } from './app.routes';
 
-import Aura from '@primeng/themes/aura';
+import { MyPreset } from '../styles';
 
 export const appConfig: ApplicationConfig = {
     providers: [
         provideRouter(routes),
         provideAnimationsAsync(),
+        provideAnimationsAsync(),
         providePrimeNG({
             theme: {
-                preset: Aura,
+                preset: MyPreset,
                 options: {
                     prefix: 'p',
                     darkModeSelector: '',
                 }
             }
         }),
-        provideHttpClient(withInterceptors([authInterceptor])),
-
+        provideHttpClient(withInterceptors([authInterceptor()])),
     ]
 };

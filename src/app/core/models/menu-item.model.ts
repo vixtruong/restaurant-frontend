@@ -1,4 +1,4 @@
-import { MenuCategory } from "../../../shared/constants/menu.constants";
+import { MenuCategory } from "../../shared/constants/menu.constants";
 
 export class MenuItem {
   readonly id: number;
@@ -8,15 +8,17 @@ export class MenuItem {
   imgUrl: string;
   price: number;
   available: boolean;
+  kitchenAvailable: boolean;
 
   constructor(data: Partial<MenuItem> = {}) {
     this.id = data.id ?? 0;
     this.name = data.name ?? 'Món ăn chưa đặt tên';
     this.category = this.mapCategory(data.category);
     this.description = data.description ?? 'Không có mô tả';
-    this.imgUrl = data.imgUrl ?? "assets/images/default-food.jpg"; // Hình mặc định nếu không có ảnh
+    this.imgUrl = data.imgUrl ?? "assets/images/default-food.jpg";
     this.price = data.price ?? 0;
     this.available = data.available ?? true;
+    this.kitchenAvailable = data.kitchenAvailable ?? true;
   }
 
   getFormattedPrice(): string {

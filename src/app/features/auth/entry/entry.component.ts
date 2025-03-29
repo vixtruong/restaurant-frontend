@@ -1,13 +1,12 @@
 import { Component, inject } from '@angular/core';
-import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { InputTextModule } from 'primeng/inputtext';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-
-import { AuthService } from '../../../../core/services/auth.service';
-import { EntryRequestDto } from '../../../../core/dtos/entry-request.dto';
+import { AuthService } from '../../../core/services/auth.service';
+import { EntryRequestDto } from '../../../core/dtos/entry-request.dto';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-entry',
@@ -28,6 +27,12 @@ export class EntryComponent {
     });
   }
 
+  ngOnInit() {
+    if (this.authService.isAuthenticated()) {
+      this.router.navigate(['/home']);
+    }
+  }
+
   preventNonNumericInput(event: KeyboardEvent) {
     const charCode = event.which ? event.which : event.keyCode;
     if (charCode < 48 || charCode > 57) {
@@ -42,27 +47,7 @@ export class EntryComponent {
       localStorage.setItem('tableNumber', tableNumber);
 
       const entryRequest = new EntryRequestDto(fullName, phoneNumber);
-      this.authService.customerEntry(entryRequest).subscribe({
-        next: (res) => {
-          localStorage.setItem('accessToken', res.accessToken);
-          localStorage.setItem('refreshToken', res.refreshToken);
-          console.log('✅ Đăng nhập thành công');
-
-          const payload = this.decodeJwt(res.accessToken);
-          const userId = payload?.nameid;
-
-          localStorage.setItem('userId', userId);
-
-          this.router.navigate(['/home']);
-        },
-        error: (err) => {
-          console.error('❌ Đăng nhập thất bại:', err);
-          alert('Đăng nhập thất bại. Vui lòng thử lại!');
-        },
-        complete: () => {
-          console.log('🔁 Hoàn tất xử lý entry request.');
-        }
-      });
+      this.authService.customerEntry(entryRequest);
     }
   }
 
@@ -71,5 +56,4 @@ export class EntryComponent {
     const decoded = atob(payload);
     return JSON.parse(decoded);
   }
-  
 }
