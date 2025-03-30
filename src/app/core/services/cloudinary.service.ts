@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
+
 export class CloudinaryService {
   private cloudName = 'diito9afa';
   private uploadPreset = 'restaurant';

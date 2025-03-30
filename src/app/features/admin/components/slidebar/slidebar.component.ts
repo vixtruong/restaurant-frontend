@@ -2,13 +2,13 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MenuModule } from 'primeng/menu';
 import { RouterModule } from '@angular/router';
-
 @Component({
   selector: 'app-slidebar',
   imports: [CommonModule, MenuModule, RouterModule],
   templateUrl: './slidebar.component.html',
   styleUrl: './slidebar.component.css'
 })
+
 export class SlidebarComponent {
 
   items = [
@@ -18,29 +18,29 @@ export class SlidebarComponent {
         { label: 'Dashboard', icon: 'pi pi-home', route: '/admin'}
       ]
     },
-    {
-      label: 'Đơn hàng',
-      items: [
-        { label: 'Quản lý đơn hàng', icon: 'pi pi-box', route: '/orders/create' },
-        { label: 'Tạo hóa đơn', icon: 'pi pi-file', route: '/orders/invoice' },
-        { label: 'Xem đơn hàng trong ngày', icon: 'pi pi-calendar', route: '/orders/today' },
-      ]
-    },
+    // {
+    //   label: 'Đơn hàng',
+    //   items: [
+    //     { label: 'Quản lý đơn hàng', icon: 'pi pi-box', route: '/orders/create' },
+    //     { label: 'Tạo hóa đơn', icon: 'pi pi-file', route: '/orders/invoice' },
+    //     { label: 'Xem đơn hàng trong ngày', icon: 'pi pi-calendar', route: '/orders/today' },
+    //   ]
+    // },
     {
       label: 'Món ăn',
       items: [
-        { label: 'Quản lý món ăn', icon: 'pi pi-cog', route: '/admin/menu-items/manage' },
+        { label: 'Quản lý món ăn', icon: 'pi pi-cog', route: '/admin/menu-items' },
         { label: 'Thêm món ăn', icon: 'pi pi-plus-circle', route: '/admin/menu-items/add' }
       ]
     },
-    {
-      label: 'Bếp',
-      items: [
-        { label: 'Quản lý thực đơn khách đặt', icon: 'pi pi-check-square', route: '/kitchen/confirm' },
-        { label: 'Cập nhật món ăn', icon: 'pi pi-refresh', route: '/kitchen/update-status' },
-        { label: 'Quản lý nguyên liệu', icon: 'pi pi-box', route: '/kitchen/ingredients' }
-      ]
-    },
+    // {
+    //   label: 'Bếp',
+    //   items: [
+    //     { label: 'Quản lý thực đơn khách đặt', icon: 'pi pi-check-square', route: '/kitchen/confirm' },
+    //     { label: 'Cập nhật món ăn', icon: 'pi pi-refresh', route: '/kitchen/update-status' },
+    //     { label: 'Quản lý nguyên liệu', icon: 'pi pi-box', route: '/kitchen/ingredients' }
+    //   ]
+    // },
     // {
     //   label: 'Khách hàng',
     //   items: [
@@ -54,8 +54,8 @@ export class SlidebarComponent {
     {
       label: 'Nhân viên',
       items: [
-        { label: 'Quản lý nhân viên', icon: 'pi pi-user-edit', route: '/staff/manage' },
-        { label: 'Thêm / Sửa thông tin', icon: 'pi pi-user-plus', route: '/staff/edit' }
+        { label: 'Quản lý nhân viên', icon: 'pi pi-user-edit', route: '/admin/employees' },
+        { label: 'Thêm nhân viên', icon: 'pi pi-user-plus', route: '/admin/employees/add' }
       ]
     },
     {

@@ -9,7 +9,9 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { SelectModule } from 'primeng/select';
 import { ToastModule } from 'primeng/toast';
 import { ImageModule } from 'primeng/image';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
+import { ConfirmationService } from 'primeng/api';
 import { MessageService } from 'primeng/api';
 
 import { MenuCategory } from '../../../../shared/constants/menu.constants';
@@ -21,15 +23,17 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-menu-item',
-  imports: [CommonModule, FormsModule, ButtonModule, DropdownModule, InputTextModule, FloatLabelModule, TextareaModule, FileUploadModule, SelectModule, ReactiveFormsModule, ToastModule, ImageModule],
-  providers: [MessageService],
+  imports: [CommonModule, FormsModule, ButtonModule, DropdownModule, InputTextModule, FloatLabelModule, TextareaModule, FileUploadModule, SelectModule, ReactiveFormsModule, ToastModule, ImageModule, ConfirmDialogModule],
+  providers: [MessageService, ConfirmationService],
   templateUrl: './add-menu-item.component.html',
   styleUrl: './add-menu-item.component.css'
 })
+
 export class AddMenuItemComponent {
   private cloudinaryService = inject(CloudinaryService);
   private menuItemService = inject(MenuItemService);
   private router = inject(Router);
+  private conformationService = inject(ConfirmationService);
 
   menuItemFormGroup: FormGroup;
   isUploadImage: boolean = false;
@@ -91,13 +95,27 @@ export class AddMenuItemComponent {
       }
     });
   }
+ 
+  confirmSubmit() {
+    this.conformationService.confirm({
+      message: 'Are you sure you want to add this food item?',
+      header: 'Confirm add menu item',
+      icon: 'pi pi-question-circle',
+      acceptLabel: 'Add',
+      rejectLabel: 'Cancel',
+      acceptButtonStyleClass: 'p-button-success',
+      accept: () => {
+        this.onSubmitCreate();
+      }
+    });
+  }
   
   onSubmitCreate() {
     if (this.menuItemFormGroup.invalid) {
       this.messageService.add({
         severity: 'warn',
-        summary: 'Form chưa hợp lệ',
-        detail: 'Vui lòng điền đầy đủ thông tin trước khi gửi.',
+        summary: 'Form invalid',
+        detail: 'Please fill all fields.',
         life: 3000
       });
   
@@ -118,7 +136,7 @@ export class AddMenuItemComponent {
           life: 3000
         });
         setTimeout(() => {
-          this.router.navigate([`/admin/menu-items/manage`]);
+          this.router.navigate([`/admin/menu-items`]);
         }, 1500);        
       },
       error: err => {
