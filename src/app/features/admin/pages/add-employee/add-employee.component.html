@@ -1,0 +1,64 @@
+<div class="rounded-xl p-6 bg-white">
+    <p-toast></p-toast>
+    <p-confirmdialog />
+    <form [formGroup]="employeeFormGroup" (ngSubmit)="confirmSubmit()"
+        class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <span class="text-xl font-bold md:col-span-2">Add Employee</span>
+
+        <!-- Full Name -->
+        <div>
+            <p-floatLabel class="w-full">
+                <input pInputText id="fullName" formControlName="fullName" class="w-full"
+                    autocomplete="off" />
+                <label for="fullName">Full Name</label>
+            </p-floatLabel>
+            <small class="text-red-500 text-sm"
+                *ngIf="employeeFormGroup.get('fullName')?.touched && employeeFormGroup.get('fullName')?.invalid">
+                Full name is required.
+            </small>
+        </div>
+
+        <!-- Role -->
+        <div class="w-full">
+            <p-floatLabel class="w-full">
+                <p-dropdown inputId="role" formControlName="role" [options]="roles"
+                    optionLabel="name" styleClass="w-full" />
+                <label for="role">Role</label>
+            </p-floatLabel>
+            <small class="text-red-500 text-sm"
+                *ngIf="employeeFormGroup.get('role')?.touched && employeeFormGroup.get('role')?.invalid">
+                Role is required.
+            </small>
+        </div>
+
+        <!-- Email -->
+        <div>
+            <p-floatLabel class="w-full">
+                <input pInputText id="email" formControlName="email" class="w-full"
+                    autocomplete="off" />
+                <label for="email">Email</label>
+            </p-floatLabel>
+            <small class="text-red-500 text-sm"
+                *ngIf="employeeFormGroup.get('email')?.touched && employeeFormGroup.get('email')?.invalid">
+                Valid email is required.
+            </small>
+        </div>
+
+        <!-- Phone Number -->
+        <div>
+            <p-floatLabel class="w-full">
+                <input pInputText id="phoneNumber" formControlName="phoneNumber"
+                    (keypress)="preventNonNumericInput($event)" class="w-full" autocomplete="off" />
+                <label for="phoneNumber">Phone Number</label>
+            </p-floatLabel>
+            <small class="text-red-500 text-sm"
+                *ngIf="employeeFormGroup.get('phoneNumber')?.touched && employeeFormGroup.get('phoneNumber')?.invalid">
+                Phone number is required.
+            </small>
+        </div>
+
+        <div class="md:col-span-2 flex justify-end">
+            <p-button type="submit" label="Submit" severity="info" />
+        </div>
+    </form>
+</div>

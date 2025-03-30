@@ -1,6 +1,7 @@
 <div class="rounded-xl p-6 bg-white">
     <p-toast></p-toast>
-    <form [formGroup]="menuItemFormGroup" (ngSubmit)="onSubmitUpdate()"
+    <p-confirmdialog />
+    <form [formGroup]="menuItemFormGroup" (ngSubmit)="confirmSubmit()"
         class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <span class="text-xl font-bold md:col-span-3">Update Menu Item</span>
 

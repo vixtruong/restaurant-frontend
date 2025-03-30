@@ -9,6 +9,8 @@ import { LayoutComponent } from './features/admin/layout/layout.component';
 import { ManageMenuItemsComponent } from './features/admin/pages/manage-menu-items/manage-menu-items.component';
 import { AddMenuItemComponent } from './features/admin/pages/add-menu-item/add-menu-item.component';
 import { UpdateMenuItemComponent } from './features/admin/pages/update-menu-item/update-menu-item.component';
+import { ManageEmployeesComponent } from './features/admin/pages/manage-employees/manage-employees.component';
+import { AddEmployeeComponent } from './features/admin/pages/add-employee/add-employee.component';
 
 export const routes: Routes = [
   {path: 'entry', component: EntryComponent},
@@ -21,9 +23,11 @@ export const routes: Routes = [
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: DashboardComponent },
-      { path: 'menu-items/manage', component: ManageMenuItemsComponent },
+      { path: 'menu-items', component: ManageMenuItemsComponent },
       { path: 'menu-items/add', component: AddMenuItemComponent },
-      { path: 'menu-items/update/:id', component: UpdateMenuItemComponent }
+      { path: 'menu-items/update/:id', component: UpdateMenuItemComponent },
+      { path: 'employees', component: ManageEmployeesComponent },
+      { path: 'employees/add', component: AddEmployeeComponent },
     ]
   }
 ];

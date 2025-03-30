@@ -11,10 +11,12 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { SelectModule } from 'primeng/select';
 import { ToastModule } from 'primeng/toast';
 import { ImageModule } from 'primeng/image';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
 import { MessageService } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 
 import { MenuItem } from '../../../../core/models/menu-item.model';
 import { MenuItemService } from '../../../../core/services/menu-item.service';
@@ -24,8 +26,8 @@ import { CloudinaryService } from '../../../../core/services/cloudinary.service'
 @Component({
   selector: 'app-update-menu-item',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, ButtonModule, DropdownModule, InputTextModule, FloatLabelModule, TextareaModule, FileUploadModule, SelectModule, ToastModule, ImageModule],
-  providers: [MessageService],
+  imports: [CommonModule, ReactiveFormsModule, ButtonModule, DropdownModule, InputTextModule, FloatLabelModule, TextareaModule, FileUploadModule, SelectModule, ToastModule, ImageModule, ConfirmDialogModule],
+  providers: [MessageService, ConfirmationService],
   templateUrl: './update-menu-item.component.html',
   styleUrl: './update-menu-item.component.css'
 })
@@ -35,6 +37,7 @@ export class UpdateMenuItemComponent implements OnInit {
   private router = inject(Router);
   private cloudinaryService = inject(CloudinaryService);
   private messageService = inject(MessageService);
+  private confirmationService = inject(ConfirmationService);
   private fb: FormBuilder;
   
   menuItem!: MenuItem;
@@ -97,7 +100,6 @@ export class UpdateMenuItemComponent implements OnInit {
     });
   }
   
-
   onUploadFile(event: any) {
     const file = event.files?.[0];
     if (!file) return;
@@ -111,6 +113,20 @@ export class UpdateMenuItemComponent implements OnInit {
       },
       error: () => {
         this.messageService.add({ severity: 'error', summary: 'Upload fail', detail: 'Can not load image.' });
+      }
+    });
+  }
+
+  confirmSubmit() {
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to update this food item?',
+      header: 'Confirm update menu item',
+      icon: 'pi pi-question-circle',
+      acceptLabel: 'Update',
+      rejectLabel: 'Cancel',
+      acceptButtonStyleClass: 'p-button-warn',
+      accept: () => {
+        this.onSubmitUpdate();
       }
     });
   }
@@ -165,7 +181,7 @@ export class UpdateMenuItemComponent implements OnInit {
           life: 3000
         });
         setTimeout(() => {
-          this.router.navigate([`/admin/menu-items/manage`]);
+          this.router.navigate([`/admin/menu-items`]);
         }, 1500);        
       },
       error: err => {
