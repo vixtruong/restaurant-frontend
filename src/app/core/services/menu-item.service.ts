@@ -30,6 +30,10 @@ export class MenuItemService {
     return this.http.put<any>(`${this.apiUrl}/update/${id}`, item);
   }
 
+  updateItemStatus(id: number): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/update-status/${id}`, id);
+  }
+
   deleteMenuItem(id: number): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/${id}`);
   }  

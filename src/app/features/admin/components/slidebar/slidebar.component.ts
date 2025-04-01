@@ -33,14 +33,13 @@ export class SlidebarComponent {
         { label: 'Thêm món ăn', icon: 'pi pi-plus-circle', route: '/admin/menu-items/add' }
       ]
     },
-    // {
-    //   label: 'Bếp',
-    //   items: [
-    //     { label: 'Quản lý thực đơn khách đặt', icon: 'pi pi-check-square', route: '/kitchen/confirm' },
-    //     { label: 'Cập nhật món ăn', icon: 'pi pi-refresh', route: '/kitchen/update-status' },
-    //     { label: 'Quản lý nguyên liệu', icon: 'pi pi-box', route: '/kitchen/ingredients' }
-    //   ]
-    // },
+    {
+      label: 'Bếp',
+      items: [
+        { label: 'Quản lý thực đơn khách đặt', icon: 'pi pi-check-square', route: '/admin/kitchen-orders' },
+        { label: 'Cập nhật món ăn', icon: 'pi pi-refresh', route: '/admin/kitchen-orders/manage-available-menu' },
+      ]
+    },
     // {
     //   label: 'Khách hàng',
     //   items: [
