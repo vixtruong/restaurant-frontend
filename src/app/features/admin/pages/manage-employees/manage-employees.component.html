@@ -1,4 +1,4 @@
-<div class="rounded-lg p-8 pt-2 pb-2 bg-white">
+<div class="rounded-md p-8 pt-2 pb-2 bg-white">
     <p-toast />
     <p-confirmdialog />
     <p-table #dt2 [value]="users" [tableStyle]="{ 'min-width': '60rem' }" [paginator]="true"
@@ -26,7 +26,6 @@
                 <th>Phone Number</th>
                 <th pSortableColumn="roleName">Role <p-sortIcon field="roleName" /></th>
                 <th pSortableColumn="joinTime">Join Time <p-sortIcon field="joinTime" /></th>
-                <th>Actions</th>
             </tr>
         </ng-template>
         <ng-template #body let-user let-rowIndex="rowIndex">
@@ -37,13 +36,6 @@
                 <td>{{ user.phoneNumber }}</td>
                 <td>{{ user.roleName }}</td>
                 <td>{{ user.joinTime | date: 'dd/MM/yyyy' }}</td>
-                <td>
-                    <div class="flex gap-2">
-                        <p-button icon="pi pi-trash" severity="danger"
-                            (onClick)="confirmDelete(user.id)" />
-                        <p-button icon="pi pi-file-edit" severity="info" />
-                    </div>
-                </td>
             </tr>
         </ng-template>
         <ng-template #footer>

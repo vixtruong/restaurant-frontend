@@ -8,6 +8,7 @@ export class MenuItem {
   imgUrl: string;
   price: number;
   available: boolean;
+  tempStatus?: boolean;
   kitchenAvailable: boolean;
 
   constructor(data: Partial<MenuItem> = {}) {

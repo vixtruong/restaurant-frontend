@@ -11,10 +11,13 @@ import { AddMenuItemComponent } from './features/admin/pages/add-menu-item/add-m
 import { UpdateMenuItemComponent } from './features/admin/pages/update-menu-item/update-menu-item.component';
 import { ManageEmployeesComponent } from './features/admin/pages/manage-employees/manage-employees.component';
 import { AddEmployeeComponent } from './features/admin/pages/add-employee/add-employee.component';
+import { ManageKitchenOrdersComponent } from './features/admin/pages/manage-kitchen-orders/manage-kitchen-orders.component';
+import { ManageAvailableMenuComponent } from './features/admin/pages/manage-available-menu/manage-available-menu.component';
 
 export const routes: Routes = [
   {path: 'entry', component: EntryComponent},
-  {path: 'home', component: HomeComponent, canActivate: [authGuard]},
+  // {path: 'home', component: HomeComponent, canActivate: [authGuard]},
+  {path: 'home', component: HomeComponent},
   {path: '', redirectTo: 'admin', pathMatch: 'full'},
   {path: 'login', component: LoginComponent},
   {
@@ -28,6 +31,8 @@ export const routes: Routes = [
       { path: 'menu-items/update/:id', component: UpdateMenuItemComponent },
       { path: 'employees', component: ManageEmployeesComponent },
       { path: 'employees/add', component: AddEmployeeComponent },
+      { path: 'kitchen-orders', component: ManageKitchenOrdersComponent },
+      { path: 'kitchen-orders/manage-available-menu', component: ManageAvailableMenuComponent },
     ]
   }
 ];

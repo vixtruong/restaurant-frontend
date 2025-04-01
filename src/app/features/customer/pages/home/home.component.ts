@@ -57,7 +57,7 @@ export class HomeComponent {
       const matchCategory = category === 'Tất cả' || category === '' || item.category === category;
       const itemName = this.removeVietnameseTones(item.name);
       const matchSearch = query === '' || itemName.includes(query);
-      return matchCategory && matchSearch;
+      return matchCategory && matchSearch && item.kitchenAvailable;
     });
   }
 }
