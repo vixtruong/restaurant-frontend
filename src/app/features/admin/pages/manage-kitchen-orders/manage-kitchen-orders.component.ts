@@ -12,9 +12,6 @@ import { KitchenOrderService } from '../../../../core/services/kitchen-order.ser
 import { ConfirmationService } from 'primeng/api';
 import { MessageService } from 'primeng/api';
 
-// import { MenuItemService } from '../../../../core/services/menu-item.service';
-// import { MenuItem } from '../../../../core/models/menu-item.model';
-
 @Component({
   selector: 'app-manage-kitchen-orders',
   imports: [CommonModule, FormsModule, SelectModule, TableModule, ConfirmDialogModule, ToastModule],

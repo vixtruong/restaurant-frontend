@@ -18,14 +18,14 @@ export class SlidebarComponent {
         { label: 'Dashboard', icon: 'pi pi-home', route: '/admin'}
       ]
     },
-    // {
-    //   label: 'Đơn hàng',
-    //   items: [
-    //     { label: 'Quản lý đơn hàng', icon: 'pi pi-box', route: '/orders/create' },
-    //     { label: 'Tạo hóa đơn', icon: 'pi pi-file', route: '/orders/invoice' },
-    //     { label: 'Xem đơn hàng trong ngày', icon: 'pi pi-calendar', route: '/orders/today' },
-    //   ]
-    // },
+    {
+      label: 'Đơn hàng',
+      items: [
+        { label: 'Quản lý đơn hàng', icon: 'pi pi-box', route: '/admin/orders' },
+        { label: 'Tạo hóa đơn', icon: 'pi pi-file', route: '/orders/invoice' },
+        { label: 'Xem đơn hàng trong ngày', icon: 'pi pi-calendar', route: '/orders/today' },
+      ]
+    },
     {
       label: 'Món ăn',
       items: [

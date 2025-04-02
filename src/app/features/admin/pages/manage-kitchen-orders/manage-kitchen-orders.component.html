@@ -17,6 +17,7 @@
         <ng-template #header>
             <tr>
                 <th style="width: 4%">#</th>
+                <th>Table</th>
                 <th style="width:20%">Food Name
                 </th>
                 <th>Category</th>
@@ -27,6 +28,7 @@
         <ng-template #body let-item let-rowIndex="rowIndex">
             <tr>
                 <td>{{ dt2.first + rowIndex + 1 }}</td>
+                <td>{{ item.tableNumber }}</td>
                 <td>{{ item.menuItem.name }}</td>
                 <td>
                     {{ item.menuItem.category }}

@@ -6,6 +6,8 @@ import { CartService } from './cart.service';
 import { OrderItemDto } from '../dtos/order-item.dto';
 import { OrderRequestDto } from '../dtos/order-request.dto';
 import { OrderItem } from '../models/order-item.model';
+import { OrderDto } from '../dtos/order.dto';
+import { OrderDetailDto } from '../dtos/order-detail.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +19,14 @@ export class OrderService {
   private cartService = inject(CartService);
 
   constructor(private http: HttpClient) { }
+
+  getAllOrders(): Observable<OrderDto[]> {
+    return this.http.get<OrderDto[]>(this.apiUrl);
+  }
+
+  getOrderDetail(orderId: number): Observable<OrderDetailDto> {
+    return this.http.get<OrderDetailDto>(`${this.apiUrl}/detail/${orderId}`);
+  }
 
   createOrder(): Observable<any> {
     const orderId = localStorage.getItem('orderId');
@@ -30,8 +40,6 @@ export class OrderService {
       menuItemId: i.id,
       quantity: i.quantity
     }));
-
-    let orderRequest: OrderRequestDto | undefined;
 
     if (orderItemDtos.length > 0 && userId && tableNumber) {
       const orderRequest = new OrderRequestDto({

@@ -1,0 +1,64 @@
+<div class="invoice-container print:h-auto rounded-md p-8 bg-white">
+    <!-- Header -->
+    <div class="flex justify-between">
+        <div>
+            <img src="https://cdni.iconscout.com/illustration/premium/thumb/restaurant-building-illustration-download-in-svg-png-gif-file-formats--delicious-logo-shop-entrance-restaurants-pack-buildings-illustrations-9625906.png?f=webp"
+                alt="Logo" class="w-12 mb-2" />
+            <h2 class="text-xl font-bold">YOUR COMPANY</h2>
+            <p>9137 3rd Lane California City<br />CA 93504, U.S.A.</p>
+        </div>
+        <div class="text-right">
+            <h2 class="text-lg font-bold">INVOICE</h2>
+            <p><strong>DATE:</strong> {{ today }}</p>
+            <p><strong>CUSTOMER:</strong> {{ orderDetail?.customerName }}</p>
+            <p><strong>TABLE:</strong> {{ orderDetail?.tableNumber }}</p>
+        </div>
+    </div>
+
+    <!-- Bill To -->
+    <div class="mb-6">
+        <h3 class="font-semibold">BILL TO</h3>
+        <p>Claire Williams, 148 Hope Lane<br />Palo Alto, CA 94304.</p>
+    </div>
+
+    <!-- Product Table with PrimeNG -->
+    <table class="w-full border border-gray-300 mb-4 text-sm" *ngIf="orderDetail">
+        <thead class="bg-gray-100">
+            <tr>
+                <th class="border px-3 py-1 text-left">Food</th>
+                <th class="border px-3 py-1 text-center">Quantity</th>
+                <th class="border px-3 py-1 text-right">Unit Price</th>
+                <th class="border px-3 py-1 text-right">Line Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of orderDetail.orderItems">
+                <td class="border px-3 py-1">{{ item.menuItemName }}</td>
+                <td class="border px-3 py-1 text-center">{{ item.quantity }}</td>
+                <td class="border px-3 py-1 text-right">{{ item.unitPrice.toLocaleString('vi-VN') }}
+                </td>
+                <td class="border px-3 py-1 text-right">{{ item.price.toLocaleString('vi-VN') }}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Totals -->
+    <div class="text-right space-y-1 mb-4">
+        <p><strong>SUBTOTAL:</strong> {{ subTotal?.toLocaleString('vi-VN') }}
+        </p>
+        <p><strong>VAT #:</strong> 10% </p>
+        <p class="text-lg"><strong>TOTAL:</strong> {{ total?.toLocaleString('vi-VN') }} </p>
+    </div>
+
+    <!-- Notes -->
+    <div>
+        <h4 class="font-semibold">NOTES</h4>
+        <p class="italic text-gray-500">Thank you for your business.</p>
+    </div>
+</div>
+
+<div class="button-container">
+    <p-button label="Print invoice" icon="pi pi-print" severity="warn"
+        class="fixed bottom-10 right-10 z-50" (onClick)="printInvoice()" />
+</div>

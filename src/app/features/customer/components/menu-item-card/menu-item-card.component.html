@@ -1,6 +1,6 @@
 <p-card *ngIf="item.available" [style]="{ overflow: 'hidden' }">
     <ng-template #header>
-        <img alt="Card" class="w-full" src="{{item.imgUrl}}" />
+        <img alt="Card" class="w-full h-50.5" src="{{item.imgUrl}}" />
     </ng-template>
     <ng-template #title> {{item.name}} </ng-template>
     <ng-template #subtitle> {{item.category}}</ng-template>
@@ -8,7 +8,7 @@
         {{item.description}}
     </p>
     <p style="font-weight: 600;">
-        {{item.getFormattedPrice()}}
+        {{ item.getFormattedPrice() }}
     </p>
     <ng-template #footer>
         <div class="flex gap-4 mt-1">

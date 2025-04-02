@@ -13,6 +13,8 @@ import { ManageEmployeesComponent } from './features/admin/pages/manage-employee
 import { AddEmployeeComponent } from './features/admin/pages/add-employee/add-employee.component';
 import { ManageKitchenOrdersComponent } from './features/admin/pages/manage-kitchen-orders/manage-kitchen-orders.component';
 import { ManageAvailableMenuComponent } from './features/admin/pages/manage-available-menu/manage-available-menu.component';
+import { ManageOrdersComponent } from './features/admin/pages/manage-orders/manage-orders.component';
+import { InvoiceComponent } from './features/admin/pages/invoice/invoice.component';
 
 export const routes: Routes = [
   {path: 'entry', component: EntryComponent},
@@ -33,6 +35,8 @@ export const routes: Routes = [
       { path: 'employees/add', component: AddEmployeeComponent },
       { path: 'kitchen-orders', component: ManageKitchenOrdersComponent },
       { path: 'kitchen-orders/manage-available-menu', component: ManageAvailableMenuComponent },
+      { path: 'orders', component: ManageOrdersComponent },
+      { path: 'invoice/:orderId', component: InvoiceComponent },
     ]
   }
 ];
