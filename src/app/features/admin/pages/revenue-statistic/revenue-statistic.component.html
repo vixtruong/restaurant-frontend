@@ -1,0 +1,21 @@
+<div class="rounded-md p-6 bg-white">
+    <form class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <span class="text-xl font-bold md:col-span-2">Time</span>
+        <p-floatlabel class="w-full">
+            <p-select [options]="months" [(ngModel)]="selectMonth" name="month" inputId="month"
+                styleClass="w-full" (onChange)="onChange(selectMonth, selectYear)" />
+            <label for="month">Month</label>
+        </p-floatlabel>
+        <p-floatlabel class="w-full">
+            <p-select [options]="years" [(ngModel)]="selectYear" name="year" inputId="year"
+                styleClass="w-full" (onChange)="onChange(selectMonth, selectYear)" />
+            <label for="year">Year</label>
+        </p-floatlabel>
+    </form>
+</div>
+
+<div class="rounded-md p-6 mt-4 bg-white">
+    <div class="rounded-md p-4 shadow">
+        <p-chart type="bar" [data]="chartData" class="h-auto w-auto" [options]="chartOptions" />
+    </div>
+</div>

@@ -1,5 +1,7 @@
-<app-topbar class="fixed top-0 left-0 right-0 z-50 bg-white"
-    (menuToggle)="toggleSlidebar()"></app-topbar>
+<div class="top-bar-container">
+    <app-topbar class="fixed top-0 left-0 right-0 z-50 bg-white"
+        (menuToggle)="toggleSlidebar()"></app-topbar>
+</div>
 
 <div class="admin-container bg-gray-200 pt-[64px] h-screen relative">
 
@@ -8,12 +10,13 @@
             'translate-x-0': showSlidebar,
             '-translate-x-full': !showSlidebar
             }">
-        <div class="h-full overflow-y-auto scrollbar bg-white border-transparent rounded-md">
+        <div
+            class="slider-container h-full overflow-y-auto scrollbar bg-white border-transparent rounded-md">
             <app-slidebar class="h-full"></app-slidebar>
         </div>
     </div>
 
-    <div class="transition-all duration-300 h-[calc(100vh-64px)] overflow-y-auto p-8 sm:pl-0"
+    <div class="content-container transition-all duration-300 h-[calc(100vh-64px)] overflow-y-auto p-8 sm:pl-0"
         [ngClass]="{
             'sm:ml-8': true,
             'sm:ml-[370px]': showSlidebar

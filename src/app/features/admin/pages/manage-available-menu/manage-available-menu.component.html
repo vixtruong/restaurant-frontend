@@ -22,7 +22,7 @@
                 <th>Image</th>
                 <th pSortableColumn="category">Category <p-sortIcon field="category" /></th>
                 <th>Description</th>
-                <th>Actions</th>
+                <th class="flex justify-center">Actions</th>
             </tr>
         </ng-template>
         <ng-template #body let-product let-rowIndex="rowIndex">
@@ -36,7 +36,7 @@
                 <td>
                     <p>{{product.description}}</p>
                 </td>
-                <td>
+                <td class="flex justify-center">
                     <p-togglebutton [(ngModel)]="product.tempStatus" onLabel="Available"
                         offLabel="Unavailable" styleClass="w-36" ariaLabel="Do you confirm"
                         (onChange)="confirmChangeStatus(product.id, product)" />
