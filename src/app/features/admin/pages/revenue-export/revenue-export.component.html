@@ -1,0 +1,25 @@
+<div class="rounded-md p-6 bg-white">
+    <p-toast />
+    <form [formGroup]="fromToForm" (ngSubmit)="submit()"
+        class="form-container grid grid-cols-1 md:grid-cols-2 gap-6">
+        <span class="text-xl font-bold md:col-span-2">Date</span>
+
+        <!-- From Date -->
+        <p-floatLabel class="w-full">
+            <p-datepicker inputId="from" formControlName="from" showIcon iconDisplay="input"
+                styleClass="w-full"></p-datepicker>
+            <label for="from">From</label>
+        </p-floatLabel>
+
+        <!-- To Date -->
+        <p-floatLabel class="w-full">
+            <p-datepicker inputId="to" formControlName="to" showIcon iconDisplay="input"
+                styleClass="w-full"></p-datepicker>
+            <label for="to">To</label>
+        </p-floatLabel>
+
+        <div class="md:col-span-2 flex justify-end">
+            <p-button type="submit" label="Export file" severity="info"></p-button>
+        </div>
+    </form>
+</div>

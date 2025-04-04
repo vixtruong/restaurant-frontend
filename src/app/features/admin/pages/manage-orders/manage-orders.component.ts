@@ -11,6 +11,9 @@ import { ConfirmationService } from 'primeng/api';
 import { MessageService } from 'primeng/api';
 import { OrderService } from '../../../../core/services/order.service';
 import { OrderDto } from '../../../../core/dtos/order.dto';
+import { Router } from '@angular/router';
+import { PaymentService } from '../../../../core/services/payment.service';
+import { Payment } from '../../../../core/models/payment.model';
 
 @Component({
   selector: 'app-manage-orders',
@@ -22,8 +25,11 @@ import { OrderDto } from '../../../../core/dtos/order.dto';
 
 export class ManageOrdersComponent {
   orderService = inject(OrderService);
+  paymentService = inject(PaymentService);
+
   messageService = inject(MessageService);
   confirmationService = inject(ConfirmationService);
+  router = inject(Router);
 
   orders: OrderDto[] = [];
   filterOrders: OrderDto[] = [];
@@ -53,7 +59,7 @@ export class ManageOrdersComponent {
     this.filterOrders = this.orders.filter(o => o.status === value);
   }
 
-  confirmCreateBill(id: number, customerName: string) {
+  confirmCreateBill(order: OrderDto, customerName: string) {
     this.confirmationService.confirm({
       message: `Are you sure to create transaction for ${customerName}?`,
       header: 'Confirm create transaction',
@@ -62,12 +68,27 @@ export class ManageOrdersComponent {
       rejectLabel: 'Cancle',
       acceptButtonStyleClass: 'p-button-info',
       accept: () => {
-        this.createBill(id);
+        this.createBill(order);
       }
     });
   }
 
-  createBill(id: number) {
+  createBill(order: OrderDto) {
+    // const payment = new Payment({
+    //   orderId: order.id,
+    //   userId: order.customerId,
+    //   amount: order.totalPrice,
+    //   status: "Paid",
+    // });
 
+    // this.paymentService.createPayment(payment).subscribe({
+    //   next: data => {
+    //     console.log(data);
+    //   },
+    //   error: err => console.log(err),
+    //   complete: () => console.log('Create payment complete')
+    // });
+
+    this.router.navigate(['/admin/invoice', order.id]);
   }
 }

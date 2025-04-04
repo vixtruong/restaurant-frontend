@@ -1,51 +1,52 @@
-<div class="rounded-md p-8 pt-2 pb-2 bg-white">
-    <p-toast />
-    <p-confirmdialog />
-    <!-- [globalFilterFields]="['name', 'description', 'category']" -->
-    <p-table #dt2 [value]="filterOrders" [tableStyle]="{ 'min-width': '60rem' }" [paginator]="true"
-        [rows]="10" [rowsPerPageOptions]="[5, 10, 20]">
+<div class="rounded-md p-6 bg-white">
+    <p-table #dt2 [value]="filterPayments" [tableStyle]="{ 'min-width': '60rem' }"
+        [paginator]="true" [rows]="10" [rowsPerPageOptions]="[5, 10, 20]">
 
         <ng-template #caption>
             <div class="flex items-center justify-between">
                 <span class="text-xl font-bold">Menu Items</span>
-                <p-select [options]="stateOptions" placeholder="Select status"
-                    class="w-full md:w-56" (onChange)="onOptionChange($event)">
+                <p-select [options]="options" [(ngModel)]="selectedOption"
+                    placeholder="Select status" class="w-full md:w-56"
+                    (onChange)="onSelectChange()">
                 </p-select>
             </div>
         </ng-template>
         <ng-template #header>
             <tr>
                 <th style="width: 4%">#</th>
-                <th>Table</th>
                 <th>Customer</th>
-                <th>Total Price</th>
+                <th>Amount</th>
+                <th>Payment Method</th>
                 <th>Status</th>
-                <th style="width: 15%">Actions</th>
+                <th>PaidAt</th>
+                <th style="width: 10%">Actions</th>
             </tr>
         </ng-template>
         <ng-template #body let-item let-rowIndex="rowIndex">
             <tr>
                 <td>{{ dt2.first + rowIndex + 1 }}</td>
-                <td>{{ item.tableNumber }}</td>
+                <td>{{ item.userName }}</td>
                 <td>
-                    {{ item.customerName }}
+                    {{ item.amount }}
                 </td>
                 <td>
-                    {{ item.totalPrice.toLocaleString('vi-VN') }}
+                    {{ item.paymentMethod }}
                 </td>
                 <td>
                     {{ item.status }}
                 </td>
                 <td>
-                    <p-button label="Create bill" severity="info"
-                        (onClick)="confirmCreateBill(item, item.customerName)" />
+                    {{ item.getFormatDate() }}
+                </td>
+                <td>
+                    <p-button label="Refund" severity="info" />
                 </td>
             </tr>
         </ng-template>
         <ng-template #footer>
             <tr>
                 <td colspan="7" class="custom-footer">
-                    In total there are {{ filterOrders.length }} orders.
+                    In total there are {{ filterPayments.length }} orders.
                 </td>
             </tr>
         </ng-template>

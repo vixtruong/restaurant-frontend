@@ -22,8 +22,6 @@ export class SlidebarComponent {
       label: 'Đơn hàng',
       items: [
         { label: 'Quản lý đơn hàng', icon: 'pi pi-box', route: '/admin/orders' },
-        { label: 'Tạo hóa đơn', icon: 'pi pi-file', route: '/orders/invoice' },
-        { label: 'Xem đơn hàng trong ngày', icon: 'pi pi-calendar', route: '/orders/today' },
       ]
     },
     {
@@ -60,7 +58,9 @@ export class SlidebarComponent {
     {
       label: 'Thống kê',
       items: [
-        { label: 'Theo dõi doanh thu', icon: 'pi pi-dollar', route: '/stats/revenue' }
+        { label: 'Quản lý thanh toán', icon: 'pi pi-dollar', route: '/admin/revenue' },
+        { label: 'Thống kê thanh toán', icon: 'pi pi-chart-bar', route: '/admin/revenue/statistic' },
+        { label: 'Xuất thống kê', icon: 'pi pi pi-file', route: '/admin/revenue/export' },
       ]
     }
   ];

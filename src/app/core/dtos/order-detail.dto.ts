@@ -1,11 +1,13 @@
 export class OrderDetailDto {
   readonly orderId: number;
+  customerId: number;
   customerName: string;
   tableNumber: number;
   orderItems: OrderItemDetailDto[];
 
   constructor(data: Partial<OrderDetailDto>) {
     this.orderId = data.orderId ?? 0,
+    this.customerId = data.customerId ?? 0,
     this.customerName = data.customerName ?? "",
     this.tableNumber = data.tableNumber ?? 0,
     this.orderItems = data.orderItems ?? []
