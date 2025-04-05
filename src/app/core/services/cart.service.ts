@@ -54,4 +54,11 @@ export class CartService {
     this.saveCart(updated);
   }
   
+  cancelItem(index: number) {
+    const cart = this.getCart();
+    if (index >= 0 && index < cart.length) {
+      cart.splice(index, 1); 
+      this.saveCart(cart); 
+    }
+  }  
 }

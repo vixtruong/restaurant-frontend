@@ -27,11 +27,15 @@ export class RevenueComponent {
   options = ['Tất cả', 'Hôm nay', 'Hôm qua'];
   selectedOption = 'Tất cả';
 
+  total: number = 0;
+
   ngOnInit() {
     this.paymentService.getAllPayments().subscribe({
       next: data => {
         this.payments = data.map(item => new PaymentDto(item));
         this.filterPayments = this.payments;
+
+        this.filterPayments.forEach(item => this.total += item.amount);
       }
     });
   }
@@ -48,6 +52,9 @@ export class RevenueComponent {
     } else {
       this.filterPayments = this.payments;
     }
+
+    this.total = 0;
+    this.filterPayments.forEach(item => this.total += item.amount);
   }
 
   isSameDay(date1: Date, date2: Date): boolean {

@@ -1,10 +1,14 @@
-<app-order-cart [(visible)]="visible"></app-order-cart>
+<app-order-cart [(visible)]="orderCartVisible"></app-order-cart>
+<app-confirm-order [(visible)]="confirmedOrderVisible"></app-confirm-order>
+<p-confirm-dialog></p-confirm-dialog>
 <p-toolbar>
     <ng-template #start>
-        <div class="flex items-center gap-2 ml-5">
+        <div class="flex items-center gap-4 ml-5">
             <p-avatar
                 image="https://cdni.iconscout.com/illustration/premium/thumb/restaurant-building-illustration-download-in-svg-png-gif-file-formats--delicious-logo-shop-entrance-restaurants-pack-buildings-illustrations-9625906.png?f=webp"
                 class="mr-2" size="large" shape="circle" />
+
+            <p-button label="Exit" severity="danger" (onClick)="confirmExit()" />
         </div>
     </ng-template>
 
@@ -23,8 +27,10 @@
 
     <ng-template #end>
         <div class="flex items-center gap-2 mr-5">
-            <p-button label="Order Card" icon="pi pi-cart-arrow-down" (onClick)="visible = !visible"
-                severity="warn" />
+            <p-button label="Order Card" icon="pi pi-cart-arrow-down"
+                (onClick)="orderCartVisible = !orderCartVisible" severity="warn" />
+            <p-button label="Confirmed Order" icon="pi pi-cart-minus" severity="info"
+                (onClick)="confirmedOrderVisible = !confirmedOrderVisible" />
         </div>
     </ng-template>
 </p-toolbar>
