@@ -32,4 +32,8 @@ export class KitchenOrderService {
   updateStatusToReady(id: number): Observable<any> {
     return this.http.put<any>(`${this.apiUrl}/update-to-ready/${id}`, id);
   }
+
+  deleteKitchenOrder(id: number): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/delete/${id}`, id);
+  }
 }

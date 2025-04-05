@@ -1,4 +1,4 @@
-<div class="rounded-md p-8 pt-2 pb-2 bg-white">
+<div class="rounded-md p-8 pt-2 pb-2 bg-white overflow-auto">
     <p-toast />
     <p-confirmdialog />
     <!-- [globalFilterFields]="['name', 'description', 'category']" -->
@@ -40,7 +40,7 @@
                     <p-select [options]="getAvailableOptions(item)" [(ngModel)]="item.tempStatus"
                         optionLabel="name" optionValue="value" placeholder="Select status"
                         class="w-full md:w-56"
-                        (onChange)="confirmChangeStatus(item.tempStatus, item)">
+                        (onChange)="confirmChangeStatus(item.tempStatus, item)" appendTo="body">
                     </p-select>
                 </td>
             </tr>

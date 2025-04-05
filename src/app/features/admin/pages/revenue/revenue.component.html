@@ -27,7 +27,7 @@
                 <td>{{ dt2.first + rowIndex + 1 }}</td>
                 <td>{{ item.userName }}</td>
                 <td>
-                    {{ item.amount }}
+                    {{ item.amount.toLocaleString('vi-VN') }}
                 </td>
                 <td>
                     {{ item.paymentMethod }}
@@ -47,6 +47,7 @@
             <tr>
                 <td colspan="7" class="custom-footer">
                     In total there are {{ filterPayments.length }} orders.
+                    Total: {{ total.toLocaleString('vi-VN') }}
                 </td>
             </tr>
         </ng-template>

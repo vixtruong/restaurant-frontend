@@ -21,8 +21,8 @@ import { RevenueExportComponent } from './features/admin/pages/revenue-export/re
 
 export const routes: Routes = [
   {path: 'entry', component: EntryComponent},
-  // {path: 'home', component: HomeComponent, canActivate: [authGuard]},
-  {path: 'home', component: HomeComponent},
+  {path: 'home', component: HomeComponent, canActivate: [authGuard]}, 
+  // {path: 'home', component: HomeComponent},
   {path: '', redirectTo: 'admin', pathMatch: 'full'},
   {path: 'login', component: LoginComponent},
   {
