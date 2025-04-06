@@ -28,6 +28,14 @@ export class OrderService {
     return this.http.get<OrderDetailDto>(`${this.apiUrl}/detail/${orderId}`);
   }
 
+  gerNumberOfOrdersInMonth(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/number-orders-month`);
+  }
+
+  gerNumberOfOrdersToday(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/number-orders-today`);
+  }
+
   createOrder(): Observable<any> {
     const orderId = localStorage.getItem('orderId');
     const userId = localStorage.getItem('userId');
