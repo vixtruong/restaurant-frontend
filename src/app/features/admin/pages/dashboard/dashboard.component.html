@@ -1,53 +1,65 @@
 <div class="grid grid-cols-1 bg-transparent sm:grid-cols-2 lg:grid-cols-4 gap-6">
-    <!-- Card: Orders -->
     <div class="bg-white rounded-md p-5 flex justify-between items-center">
         <div>
-            <p class="text-gray-500 font-semibold">Orders</p>
-            <h2 class="text-2xl font-bold">152</h2>
-            <p class="text-green-500 text-sm mt-1">24 new <span class="text-gray-500">since last
-                    visit</span></p>
+            <p class="text-gray-500 font-semibold">Today Orders</p>
+            <h2 class="text-2xl font-bold">{{ numberOrdersToday }}</h2>
+            <p class="text-green-500 text-sm mt-1">Total orders <span class="text-gray-500">in
+                    today</span></p>
         </div>
         <div class="bg-blue-100 p-3 rounded-lg">
             <i class="pi pi-shopping-cart text-2xl text-blue-500"></i>
         </div>
     </div>
 
-    <!-- Card: Revenue -->
     <div class="bg-white rounded-md p-5 flex justify-between items-center">
         <div>
-            <p class="text-gray-500 font-semibold">Revenue</p>
-            <h2 class="text-2xl font-bold">$2.100</h2>
-            <p class="text-green-500 text-sm mt-1">%52+ <span class="text-gray-500">since last
-                    week</span></p>
+            <p class="text-gray-500 font-semibold">Month Orders</p>
+            <h2 class="text-2xl font-bold">{{ numberOrdersInMonth }}</h2>
+            <p class="text-green-500 text-sm mt-1">Total orders <span class="text-gray-500">in
+                    month</span></p>
         </div>
         <div class="bg-orange-100 p-3 rounded-lg">
-            <i class="pi pi-dollar text-2xl text-orange-500"></i>
+            <i class="pi pi-shopping-cart text-2xl text-orange-500"></i>
         </div>
     </div>
 
-    <!-- Card: Customers -->
     <div class="bg-white rounded-md p-5 flex justify-between items-center">
         <div>
-            <p class="text-gray-500 font-semibold">Customers</p>
-            <h2 class="text-2xl font-bold">28441</h2>
-            <p class="text-green-500 text-sm mt-1">520 <span class="text-gray-500">newly
-                    registered</span></p>
+            <p class="text-gray-500 font-semibold">Today Revenue</p>
+            <h2 class="text-2xl font-bold">{{ todayRevenue.toLocaleString('vi') }}</h2>
+            <p class="text-green-500 text-sm mt-1">Revenue <span class="text-gray-500">in
+                    today</span></p>
         </div>
         <div class="bg-cyan-100 p-3 rounded-lg">
-            <i class="pi pi-users text-2xl text-cyan-500"></i>
+            <i class="pi pi-dollar text-2xl text-cyan-500"></i>
         </div>
     </div>
 
-    <!-- Card: Comments -->
     <div class="bg-white rounded-md p-5 flex justify-between items-center">
         <div>
-            <p class="text-gray-500 font-semibold">Comments</p>
-            <h2 class="text-2xl font-bold">152 <span class="font-normal">Unread</span></h2>
-            <p class="text-green-500 text-sm mt-1">85 <span class="text-gray-500">responded</span>
+            <p class="text-gray-500 font-semibold">Month Revenue</p>
+            <h2 class="text-2xl font-bold">{{ monthRevenue.toLocaleString('vi') }}</h2>
+            <p class="text-green-500 text-sm mt-1">Revenue <span class="text-gray-500">in
+                    month</span>
             </p>
         </div>
         <div class="bg-purple-100 p-3 rounded-lg">
-            <i class="pi pi-comment text-2xl text-purple-500"></i>
+            <i class="pi pi-dollar text-2xl text-purple-500"></i>
         </div>
+    </div>
+</div>
+
+
+<div class="grid grid-cols-1 mt-4 bg-transparent sm:grid-cols-2 lg:grid-cols-2 gap-6 h-auto">
+    <div class="rounded-md p-6 bg-white w-full">
+        <span class="text-xl font-bold md:col-span-2">This Month Revenue</span>
+        <p-chart type="bar" [data]="chartThisMonthData" class="h-auto w-full"
+            [options]="chartOptions" />
+    </div>
+
+    <div class="rounded-md p-6 bg-white w-full">
+        <span class="text-xl font-bold md:col-span-2">Previous Month Revenue</span>
+        <p-chart type="bar" [data]="chartPreviousMonthData" class="h-auto w-full"
+            [options]="chartOptions" />
     </div>
 </div>

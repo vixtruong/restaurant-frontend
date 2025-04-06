@@ -1,4 +1,4 @@
-<p-toolbar>
+<p-toolbar class="relative">
     <ng-template #start>
         <div class="flex items-center gap-4 ml-4 hover:cursor-pointer">
             <p-button icon="pi pi-bars" [rounded]="true" [text]="true"
@@ -17,6 +17,26 @@
     </ng-template>
 
     <ng-template #end>
+        <p-speeddial [model]="items" direction="down" [transitionDelay]="80"
+            [hideOnClickOutside]="true"
+            [style]="{ position: 'absolute', top: '0', right: '0', zIndex: 9999 }"
+            buttonStyleClass="p-0 bg-transparent border-none shadow-none">
+            <ng-template #button let-toggleCallback="toggleCallback">
+                <p-button class="p-0 mt-2" (click)="toggleCallback($event)" variant="text">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png?20200919003010"
+                        class="w-10 h-10 rounded-full border cursor-pointer" />
+                </p-button>
+            </ng-template>
 
+            <!-- Dropdown item -->
+            <ng-template #item let-item let-toggleCallback="toggleCallback">
+                <div class="flex flex-col items-center justify-center gap-1 p-2 rounded bg-white shadow-md w-28 text-sm hover:bg-gray-100 cursor-pointer"
+                    (click)="item.command(); toggleCallback($event)">
+                    <i [class]="item.icon"></i>
+                    <span>{{ item.label }}</span>
+                </div>
+            </ng-template>
+        </p-speeddial>
     </ng-template>
+
 </p-toolbar>
