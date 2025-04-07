@@ -33,6 +33,10 @@ export class KitchenOrderService {
     return this.http.put<any>(`${this.apiUrl}/update-to-ready/${id}`, id);
   }
 
+  updateStatusDone(id: number): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/update-to-done/${id}`, id);
+  }
+
   deleteKitchenOrder(id: number): Observable<any> {
     return this.http.put<any>(`${this.apiUrl}/delete/${id}`, id);
   }

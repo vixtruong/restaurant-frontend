@@ -1,0 +1,4 @@
+::ng-deep .no-border-menu {
+  border: none !important;
+  box-shadow: none !important;
+}

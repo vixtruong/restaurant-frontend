@@ -1,4 +1,4 @@
-<p-menu [model]="items">
+<p-menu [model]="items" styleClass="no-border-menu">
     <ng-template #item let-item>
         <ng-container *ngIf="item.route; else elseBlock">
             <a [routerLink]="item.route" class="p-menu-item-link">

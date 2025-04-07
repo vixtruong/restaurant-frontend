@@ -8,6 +8,7 @@ export class KitchenOrder {
   quantity: number;
   status: string;
   tempStatus?: string;
+  done?: boolean;
   cookAt?: Date;
 
   constructor(data: Partial<KitchenOrder>) {
@@ -17,5 +18,6 @@ export class KitchenOrder {
     this.quantity = data.quantity ?? 0;
     this.menuItem = data.menuItem ?? new MenuItem();
     this.status = data.status ?? "";
+    this.done = data.done;
   }
 }

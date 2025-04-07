@@ -4,7 +4,6 @@ import { EntryComponent } from './features/auth/entry/entry.component';
 import { LoginComponent } from './features/auth/login/login.component';
 import { DashboardComponent } from './features/admin/pages/dashboard/dashboard.component';
 
-import { authGuard } from './core/guards/auth.guard';
 import { LayoutComponent } from './features/admin/layout/layout.component';
 import { ManageMenuItemsComponent } from './features/admin/pages/manage-menu-items/manage-menu-items.component';
 import { AddMenuItemComponent } from './features/admin/pages/add-menu-item/add-menu-item.component';
@@ -18,31 +17,33 @@ import { InvoiceComponent } from './features/admin/pages/invoice/invoice.compone
 import { RevenueComponent } from './features/admin/pages/revenue/revenue.component';
 import { RevenueStatisticComponent } from './features/admin/pages/revenue-statistic/revenue-statistic.component';
 import { RevenueExportComponent } from './features/admin/pages/revenue-export/revenue-export.component';
+import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
   {path: 'entry', component: EntryComponent},
-  {path: 'home', component: HomeComponent, canActivate: [authGuard]}, 
-  // {path: 'home', component: HomeComponent},
-  {path: '', redirectTo: 'admin', pathMatch: 'full'},
+  {path: 'home', component: HomeComponent, canActivate: [authGuard], data: { roles: ['Customer']} }, 
+  {path: '', redirectTo: 'home', pathMatch: 'full'},
   {path: 'login', component: LoginComponent},
   {
     path: 'admin',
     component: LayoutComponent,
+    canActivate: [authGuard],
+    data: { roles: ['Quản lý', 'Nhân viên bếp', 'Bồi bàn'] },
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-      { path: 'dashboard', component: DashboardComponent },
-      { path: 'menu-items', component: ManageMenuItemsComponent },
-      { path: 'menu-items/add', component: AddMenuItemComponent },
-      { path: 'menu-items/update/:id', component: UpdateMenuItemComponent },
-      { path: 'employees', component: ManageEmployeesComponent },
-      { path: 'employees/add', component: AddEmployeeComponent },
-      { path: 'kitchen-orders', component: ManageKitchenOrdersComponent },
-      { path: 'kitchen-orders/manage-available-menu', component: ManageAvailableMenuComponent },
-      { path: 'orders', component: ManageOrdersComponent },
-      { path: 'invoice/:orderId', component: InvoiceComponent },
-      { path: 'revenue', component: RevenueComponent },
-      { path: 'revenue/statistic', component: RevenueStatisticComponent },
-      { path: 'revenue/export', component: RevenueExportComponent },
-    ]
+      { path: 'dashboard', component: DashboardComponent, canActivate: [authGuard], data: { roles: ['Quản lý', 'Nhân viên bếp', 'Bồi bàn']} },
+      { path: 'menu-items', component: ManageMenuItemsComponent, canActivate: [authGuard], data: { roles: ['Quản lý']} },
+      { path: 'menu-items/add', component: AddMenuItemComponent, canActivate: [authGuard], data: { roles: ['Quản lý']} },
+      { path: 'menu-items/update/:id', component: UpdateMenuItemComponent, canActivate: [authGuard], data: { roles: ['Quản lý']} },
+      { path: 'employees', component: ManageEmployeesComponent, canActivate: [authGuard], data: { roles: ['Quản lý']} },
+      { path: 'employees/add', component: AddEmployeeComponent, canActivate: [authGuard], data: { roles: ['Quản lý']} },
+      { path: 'kitchen-orders', component: ManageKitchenOrdersComponent, canActivate: [authGuard], data: { roles: ['Quản lý', 'Nhân viên bếp']} },
+      { path: 'kitchen-orders/manage-available-menu', component: ManageAvailableMenuComponent, canActivate: [authGuard], data: { roles: ['Quản lý', 'Nhân viên bếp']} },
+      { path: 'orders', component: ManageOrdersComponent, canActivate: [authGuard], data: { roles: ['Quản lý', 'Bồi bàn']} },
+      { path: 'invoice/:orderId', component: InvoiceComponent, canActivate: [authGuard], data: { roles: ['Quản lý', 'Bồi bàn']} },
+      { path: 'revenue', component: RevenueComponent, canActivate: [authGuard], data: { roles: ['Quản lý']} },
+      { path: 'revenue/statistic', component: RevenueStatisticComponent, canActivate: [authGuard], data: { roles: ['Quản lý']} },
+      { path: 'revenue/export', component: RevenueExportComponent, canActivate: [authGuard], data: { roles: ['Quản lý']} },
+    ],
   }
 ];

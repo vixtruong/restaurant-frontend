@@ -7,7 +7,6 @@ import { Router } from '@angular/router';
 export const authInterceptor = (): ((req: HttpRequest<unknown>, next: HttpHandlerFn) => any) => {
   return (req: HttpRequest<unknown>, next: HttpHandlerFn) => {
     const authService = inject(AuthService);
-    const router = inject(Router);
 
     // Bỏ qua URL login, register, refresh
     if (
