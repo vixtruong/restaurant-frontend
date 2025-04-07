@@ -10,6 +10,7 @@ import { RouterModule } from '@angular/router';
 })
 
 export class SlidebarComponent {
+  role: string = '';
 
   items = [
     {
@@ -21,6 +22,7 @@ export class SlidebarComponent {
     {
       label: 'Đơn hàng',
       items: [
+        { label: 'Quản lý thực đơn khách đặt', icon: 'pi pi-check-square', route: '/admin/kitchen-orders' },
         { label: 'Quản lý đơn hàng', icon: 'pi pi-box', route: '/admin/orders' },
       ]
     },
@@ -38,16 +40,6 @@ export class SlidebarComponent {
         { label: 'Cập nhật món ăn', icon: 'pi pi-refresh', route: '/admin/kitchen-orders/manage-available-menu' },
       ]
     },
-    // {
-    //   label: 'Khách hàng',
-    //   items: [
-    //     { label: 'Duyệt thực đơn', icon: 'pi pi-eye', route: '/menu' },
-    //     { label: 'Gọi món', icon: 'pi pi-phone', route: '/order' },
-    //     { label: 'Hủy món chưa xác nhận', icon: 'pi pi-times-circle', route: '/cancel-unconfirmed' },
-    //     { label: 'Xem trạng thái đơn hàng', icon: 'pi pi-info-circle', route: '/order/status' },
-    //     { label: 'Yêu cầu thanh toán', icon: 'pi pi-credit-card', route: '/order/payment' }
-    //   ]
-    // },
     {
       label: 'Nhân viên',
       items: [
@@ -64,5 +56,22 @@ export class SlidebarComponent {
       ]
     }
   ];
+  
+  ngOnInit() {
+    const role = localStorage.getItem('role');
+    this.role = role!;
+  
+    if (this.role === 'Quản lý') {
+      this.items = this.items.filter(item => item.label !== 'Bếp');
+    }
+  
+    if (this.role === 'Nhân viên bếp') {
+      this.items = this.items.filter(item => item.label === 'Trang chủ' || item.label === 'Bếp');
+    }
+  
+    if (this.role === 'Bồi bàn') {
+      this.items = this.items.filter(item => item.label === 'Trang chủ' || item.label === 'Đơn hàng');
+    }
+  }
   
 }

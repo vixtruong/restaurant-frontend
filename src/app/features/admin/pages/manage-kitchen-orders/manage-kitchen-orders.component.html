@@ -8,7 +8,7 @@
         <ng-template #caption>
             <div class="flex items-center justify-between">
                 <span class="text-xl font-bold">Menu Items</span>
-                <p-select [options]="stateOptions" optionLabel="name" optionValue="value"
+                <p-select [options]="options" optionLabel="name" optionValue="value"
                     placeholder="Select status" class="w-full md:w-56"
                     (onChange)="onFilterStatusOrders($event)">
                 </p-select>
@@ -22,11 +22,12 @@
                 </th>
                 <th>Category</th>
                 <th>Quantity</th>
-                <th class="flex justify-center">Status</th>
+                <th class="flex justify-center" *ngIf="isKitchen">Status</th>
+                <th *ngIf="!isKitchen">Action</th>
             </tr>
         </ng-template>
         <ng-template #body let-item let-rowIndex="rowIndex">
-            <tr>
+            <tr [ngClass]="{'opacity-50 pointer-events-none text-gray-400': item.done}">
                 <td>{{ dt2.first + rowIndex + 1 }}</td>
                 <td>{{ item.tableNumber }}</td>
                 <td>{{ item.menuItem.name }}</td>
@@ -36,7 +37,10 @@
                 <td>
                     {{ item.quantity }}
                 </td>
-                <td class="flex justify-center">
+                <td *ngIf="!isKitchen">
+                    <p-button label="Done" severity="info" (onClick)="confirmDone(item)" />
+                </td>
+                <td class="flex justify-center" *ngIf="isKitchen">
                     <p-select [options]="getAvailableOptions(item)" [(ngModel)]="item.tempStatus"
                         optionLabel="name" optionValue="value" placeholder="Select status"
                         class="w-full md:w-56"
@@ -48,7 +52,7 @@
         <ng-template #footer>
             <tr>
                 <td colspan="7" class="custom-footer">
-                    In total there are 12 kitchen order items.
+                    In total there are {{ filterKitchenOrders.length }} kitchen order items.
                 </td>
             </tr>
         </ng-template>

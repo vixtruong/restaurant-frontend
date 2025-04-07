@@ -1,32 +1,41 @@
 import { inject } from '@angular/core';
-import { CanActivateFn, Router } from '@angular/router';
+import { CanActivateFn } from '@angular/router';
+import { catchError, of, switchMap } from 'rxjs';
 import { AuthService } from '../services/auth.service';
-import { of } from 'rxjs';
-import { catchError, map, switchMap } from 'rxjs/operators';
 
 export const authGuard: CanActivateFn = (route, state) => {
   const auth = inject(AuthService);
-  const router = inject(Router);
-
   const token = auth.getAccessToken();
 
-  // Nếu không có token → redirect luôn
   if (!token) {
-    router.navigate(['/entry']);
+    auth.logout();
     return of(false);
   }
 
   const isExpired = auth.isTokenExpired(token);
 
+  const checkRoleAndReturn = () => {
+    const allowedRoles: string[] = route.data['roles'] || [];
+    const userRole = auth.getUserRole();
+
+    console.log('ROLE của user:', userRole);
+    console.log('ROLE được phép:', allowedRoles);
+
+    if (allowedRoles.length === 0 || allowedRoles.includes(userRole)) {
+      return of(true);
+    }
+
+    return of(false);
+  };
+
   if (!isExpired && auth.isAuthenticated()) {
-    return of(true);
+    return checkRoleAndReturn();
   }
 
-  // Nếu token hết hạn → thử refresh
   return auth.refreshToken().pipe(
-    map(() => true),
+    switchMap(() => checkRoleAndReturn()),
     catchError(() => {
-      router.navigate(['/entry']);
+      auth.logout();
       return of(false);
     })
   );

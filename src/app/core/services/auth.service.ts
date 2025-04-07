@@ -23,6 +23,11 @@ export class AuthService {
   setAccessToken(token: string) {
     localStorage.setItem('accessToken', token);
   }
+
+  getUserRole(): string {
+    const role = localStorage.getItem('role');
+    return role!;
+  }
   
   refreshToken(): Observable<string> {
     const refreshToken = localStorage.getItem('refreshToken');
@@ -51,16 +56,18 @@ export class AuthService {
 
         if (token) {
           const payload = this.decodeJwt(token);
-          const role = payload?.role;
 
           const userId = payload?.nameid;
 
           localStorage.setItem('userId', userId);
 
+          const decoded: any = jwtDecode(token);
+          const role = decoded?.role;
+
           localStorage.setItem('role', role);
         }
 
-        // this.router.navigate(['/dashboard']);
+        this.router.navigate(['/admin']);
       },
       error: err => {
         console.log("Fail log in!", err);
@@ -79,7 +86,6 @@ export class AuthService {
       role = payload?.role;
     }
     
-
     if (role === 'Customer') {
       this.router.navigate(['/404']);
     } else {
