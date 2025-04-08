@@ -45,8 +45,9 @@ export class OrderCartComponent {
   ];
 
   ngOnInit() {
-    this.orderItems = this.cartService.getCart();
-    console.log(this.orderItems);
+    this.cartService.cart$.subscribe(cart => {
+      this.orderItems = cart;
+    });
   }
 
   onContextMenu(event: MouseEvent, product: OrderItem) {

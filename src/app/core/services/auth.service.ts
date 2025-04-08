@@ -35,11 +35,10 @@ export class AuthService {
       map((res: any) => {
         localStorage.setItem('accessToken', res.accessToken);
         localStorage.setItem('refreshToken', res.refreshToken);
-        console.log(res.accessToken);
         return res.accessToken;
       }),
       catchError(err => {
-        this.logout();
+        // this.logout();
         return throwError(() => err);
       })
     );
@@ -50,7 +49,7 @@ export class AuthService {
       next: res => {
         this.setAccessToken(res.accessToken);
         localStorage.setItem('refreshToken', res.refreshToken);
-        console.log('✅ Đăng nhập thành công');
+        console.log('✅ Log in Đăng nhập thành công');
 
         const token = this.getAccessToken();
 
@@ -67,7 +66,10 @@ export class AuthService {
           localStorage.setItem('role', role);
         }
 
-        this.router.navigate(['/admin']);
+        if (token) {
+          this.router.navigate(['/admin']);
+        }
+        
       },
       error: err => {
         console.log("Fail log in!", err);
@@ -100,6 +102,7 @@ export class AuthService {
       next: (res) => {
         localStorage.setItem('accessToken', res.accessToken);
         localStorage.setItem('refreshToken', res.refreshToken);
+        localStorage.setItem('role', 'Customer');
         console.log('✅ Đăng nhập thành công');
 
         const payload = this.decodeJwt(res.accessToken);
@@ -126,11 +129,10 @@ export class AuthService {
     try {
       const decoded: any = jwtDecode(token);
 
-      const isCustomerRole = decoded.role === "Customer";
       const isNotExpired = decoded.exp * 1000 > Date.now();
 
       console.log(decoded.role, decoded.exp);
-      return isCustomerRole && isNotExpired;
+      return isNotExpired;
     } catch (error) {
       console.error('❌ Lỗi khi decode token:', error);
       return false;

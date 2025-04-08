@@ -41,6 +41,10 @@ export class DashboardComponent {
   };
 
   ngOnInit() {
+    const token = localStorage.getItem('accessToken');
+
+    if (!token) return;
+
     this.orderService.gerNumberOfOrdersInMonth().subscribe({
       next: data => this.numberOrdersInMonth = parseInt(data),
       error: err => console.log(err)
