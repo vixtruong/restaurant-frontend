@@ -2,7 +2,6 @@ import { HttpErrorResponse, HttpHandlerFn, HttpRequest } from '@angular/common/h
 import { inject } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { catchError, switchMap, throwError } from 'rxjs';
-import { Router } from '@angular/router';
 
 export const authInterceptor = (): ((req: HttpRequest<unknown>, next: HttpHandlerFn) => any) => {
   return (req: HttpRequest<unknown>, next: HttpHandlerFn) => {
@@ -21,7 +20,10 @@ export const authInterceptor = (): ((req: HttpRequest<unknown>, next: HttpHandle
     // Nếu đã login, gắn token
     if (authService.isAuthenticated()) {
       const token = authService.getAccessToken();
-      req = addToken(req, token!);
+      console.log('auth:', token);
+      if (token) {
+        req = addToken(req, token);
+      }
     }
 
     return next(req).pipe(

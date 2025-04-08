@@ -15,7 +15,7 @@
 
                 <div class="flex flex-col gap-1 mb-4">
                     <label for="password">Password</label>
-                    <input formControlName="password" pInputText id="password" />
+                    <input formControlName="password" type="password" pInputText id="password" />
                     <small
                         *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
                         class="text-red-500">
@@ -23,7 +23,7 @@
                     </small>
                 </div>
                 <div class="flex flex-col gap-1">
-                    <p-button type="submit" label="Submit"></p-button>
+                    <p-button type="submit" label="Log in" severity="info"></p-button>
                 </div>
             </form>
         </p-card>
