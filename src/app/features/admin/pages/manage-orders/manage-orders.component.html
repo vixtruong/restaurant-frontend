@@ -3,38 +3,49 @@
     <p-confirmdialog />
     <!-- [globalFilterFields]="['name', 'description', 'category']" -->
     <p-table #dt2 [value]="filterOrders" [tableStyle]="{ 'min-width': '60rem' }" [paginator]="true"
-        [rows]="10" [rowsPerPageOptions]="[5, 10, 20]">
+        [rows]="10" [rowsPerPageOptions]="[5, 10, 20]"
+        [globalFilterFields]="['status', 'createdAt']">
 
         <ng-template #caption>
             <div class="flex items-center justify-between">
                 <span class="text-xl font-bold">Menu Items</span>
-                <p-select [options]="stateOptions" placeholder="Select status"
-                    class="w-full md:w-56" (onChange)="onOptionChange($event)">
+                <p-select [options]="stateOptions" placeholder="Select" class="w-full md:w-56"
+                    (onChange)="onOptionChange($event)">
                 </p-select>
             </div>
         </ng-template>
         <ng-template #header>
             <tr>
                 <th style="width: 4%">#</th>
+                <th>Id</th>
                 <th>Table</th>
-                <th>Customer</th>
                 <th>Total Price</th>
-                <th>Status</th>
+                <th pSortableColumn="status">Status <p-sortIcon field="status" /></th>
+                <th pSortableColumn="createdAt">Create At <p-sortIcon field="createdAt" /></th>
+                <th>End At</th>
                 <th style="width: 15%">Actions</th>
             </tr>
         </ng-template>
         <ng-template #body let-item let-rowIndex="rowIndex">
             <tr>
                 <td>{{ dt2.first + rowIndex + 1 }}</td>
-                <td>{{ item.tableNumber }}</td>
                 <td>
-                    {{ item.customerName }}
+                    {{ item.id }}
                 </td>
+                <td>{{ item.tableNumber }}</td>
+
                 <td>
                     {{ item.totalPrice.toLocaleString('vi-VN') }}
                 </td>
                 <td>
                     {{ item.status }}
+                </td>
+                <td>
+                    {{ item.createdAt | date:'dd/MM/yy HH:mm' }}
+
+                </td>
+                <td>
+                    {{ item.endAt | date:'dd/MM/yy HH:mm' }}
                 </td>
                 <td>
                     <p-button label="Create bill" severity="info"
@@ -44,7 +55,7 @@
         </ng-template>
         <ng-template #footer>
             <tr>
-                <td colspan="7" class="custom-footer">
+                <td colspan="8" class="custom-footer">
                     In total there are {{ filterOrders.length }} orders.
                 </td>
             </tr>

@@ -5,6 +5,8 @@ export class OrderDto {
   tableNumber:  number;
   status: string;
   totalPrice: number;
+  createdAt: Date;
+  endAt?: Date;
 
   constructor(data: Partial<OrderDto>) {
     this.id = data.id ?? 0;
@@ -13,5 +15,7 @@ export class OrderDto {
     this.tableNumber = data.tableNumber ?? 0;
     this.status = data.status ?? "";
     this.totalPrice = data.totalPrice ?? 0;
+    this.createdAt = data.createdAt ?? new Date();
+    this.endAt = data.endAt;
   }
 }

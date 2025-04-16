@@ -20,7 +20,6 @@ export const authInterceptor = (): ((req: HttpRequest<unknown>, next: HttpHandle
     // Nếu đã login, gắn token
     if (authService.isAuthenticated()) {
       const token = authService.getAccessToken();
-      console.log('auth:', token);
       if (token) {
         req = addToken(req, token);
       }
