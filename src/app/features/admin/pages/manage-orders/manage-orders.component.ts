@@ -36,7 +36,7 @@ export class ManageOrdersComponent {
 
   @ViewChild('dt2', { static: false }) dt2!: Table;
 
-  stateOptions = ['Tất cả','Paid', 'Unpaid'];
+  stateOptions = ['Tất cả','Hôm nay', 'Hôm qua'];
 
   ngOnInit() {
     this.orderService.getAllOrders().subscribe({
@@ -51,13 +51,32 @@ export class ManageOrdersComponent {
   onOptionChange(event: any) {
     const value = event.value;
 
-    if (value === 'Tất cả') {
-      this.filterOrders = this.orders
+    const today = new Date();
+    const yesterday = new Date();
+    yesterday.setDate(today.getDate() - 1);
+
+    if (value === 'Hôm nay') {
+      this.filterOrders = this.orders.filter(o => this.isSameDay(o.createdAt, today));
+      console.log('today', this.filterOrders);
+      return;
+    } else if (value === 'Hôm qua') {
+      this.filterOrders = this.orders.filter(o => this.isSameDay(o.createdAt, yesterday));
       return;
     }
 
-    this.filterOrders = this.orders.filter(o => o.status === value);
+    this.filterOrders = this.orders;
+    console.log('all', this.filterOrders);
   }
+
+  isSameDay(date1: any, date2: Date): boolean {
+    const d1 = new Date(date1);
+    const d2 = new Date(date2);
+  
+    return d1.getDate() === d2.getDate() &&
+           d1.getMonth() === d2.getMonth() &&
+           d1.getFullYear() === d2.getFullYear();
+  }
+  
 
   confirmCreateBill(order: OrderDto, customerName: string) {
     this.confirmationService.confirm({
@@ -74,21 +93,6 @@ export class ManageOrdersComponent {
   }
 
   createBill(order: OrderDto) {
-    // const payment = new Payment({
-    //   orderId: order.id,
-    //   userId: order.customerId,
-    //   amount: order.totalPrice,
-    //   status: "Paid",
-    // });
-
-    // this.paymentService.createPayment(payment).subscribe({
-    //   next: data => {
-    //     console.log(data);
-    //   },
-    //   error: err => console.log(err),
-    //   complete: () => console.log('Create payment complete')
-    // });
-
     this.router.navigate(['/admin/invoice', order.id]);
   }
 }

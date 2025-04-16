@@ -1,4 +1,4 @@
-import { Component, inject, ViewChild } from '@angular/core';
+import { Component, inject, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -21,11 +21,11 @@ import { MessageService } from 'primeng/api';
   templateUrl: './manage-kitchen-orders.component.html',
   styleUrl: './manage-kitchen-orders.component.css'
 })
-
 export class ManageKitchenOrdersComponent {
   kitchenService = inject(KitchenOrderService);
   messageService = inject(MessageService);
   confirmationService = inject(ConfirmationService);
+  cdr = inject(ChangeDetectorRef);
 
   kitchenOrders: KitchenOrder[] = [];
   filterKitchenOrders: KitchenOrder[] = [];
@@ -44,11 +44,12 @@ export class ManageKitchenOrdersComponent {
     { name: 'Tất cả', value: 'Tất cả' },
     { name: 'Undone', value: 'Undone' },
     { name: 'Done', value: 'Done' },
-  ]
+  ];
 
-  options: any[] =  [];
+  options: any[] = [];
 
-  tempStatus: string | null = null;
+  // Map to store available options for each order by ID
+  orderOptionsMap: Map<number, { name: string; value: string }[]> = new Map();
 
   getAvailableOptions(item: KitchenOrder) {
     if (item.status === 'Cooking') {
@@ -58,6 +59,16 @@ export class ManageKitchenOrdersComponent {
       return this.stateOptions.filter(opt => opt.value === 'Ready').slice(0);
     }
     return this.stateOptions.slice(1);
+  }
+
+  // Update the available options in the map for a given order
+  updateAvailableOptions(item: KitchenOrder) {
+    this.orderOptionsMap.set(item.id, this.getAvailableOptions(item));
+  }
+
+  // Get the available options from the map for a given order
+  getOptionsForOrder(orderId: number): { name: string; value: string }[] {
+    return this.orderOptionsMap.get(orderId) || [];
   }
 
   ngOnInit() {
@@ -73,11 +84,18 @@ export class ManageKitchenOrdersComponent {
 
     this.kitchenService.getKitchenOrdersToday().subscribe({
       next: data => {
+        const statusOrder = {
+          'Pending': 1,
+          'Cooking': 2,
+          'Ready': 3
+        };
+
         this.kitchenOrders = data.map(item => {
           const order = new KitchenOrder(item);
           order.tempStatus = order.status;
+          this.updateAvailableOptions(order); // Initialize available options in the map
           return order;
-        });
+        }).sort((a, b) => statusOrder[a.status as keyof typeof statusOrder] - statusOrder[b.status as keyof typeof statusOrder]);
 
         console.log(this.kitchenOrders);
 
@@ -102,10 +120,9 @@ export class ManageKitchenOrdersComponent {
     } else {
       if (event.value !== "Tất cả") {
         const done = (event.value === 'Done') ? true : false;
-
         this.filterKitchenOrders = this.kitchenOrders.filter(order => order.done === done && order.status === 'Ready');
       } else {
-        this.filterKitchenOrders = this.kitchenOrders.filter(order =>  order.status === 'Ready');
+        this.filterKitchenOrders = this.kitchenOrders.filter(order => order.status === 'Ready');
       }
     }
   }
@@ -118,13 +135,14 @@ export class ManageKitchenOrdersComponent {
       header: 'Confirm change kitchen order status',
       icon: 'pi pi-question-circle',
       acceptLabel: 'Submit',
-      rejectLabel: 'Cancle',
+      rejectLabel: 'Cancel',
       acceptButtonStyleClass: 'p-button-warn',
       accept: () => {
         this.onStatusChange(newStatus, order);
       },
       reject: () => {
         order.tempStatus = order.status;
+        this.cdr.detectChanges();
       }
     });
   }
@@ -133,12 +151,16 @@ export class ManageKitchenOrdersComponent {
     if (newStatus === 'Cooking') {
       this.kitchenService.updateStatusToCooking(order.id).subscribe({
         next: () => {
+          order.status = newStatus;
+          order.tempStatus = newStatus;
+          this.updateAvailableOptions(order); // Update the options in the map
           this.messageService.add({
             severity: 'success',
             summary: 'Update successfully.',
             detail: `${order.menuItem.name} is updated status successfully!`,
             life: 3000
           });
+          this.cdr.detectChanges();
         },
         error: () => {
           this.messageService.add({
@@ -155,12 +177,16 @@ export class ManageKitchenOrdersComponent {
     if (newStatus === 'Ready') {
       this.kitchenService.updateStatusToReady(order.id).subscribe({
         next: () => {
+          order.status = newStatus;
+          order.tempStatus = newStatus;
+          this.updateAvailableOptions(order); // Update the options in the map
           this.messageService.add({
             severity: 'success',
             summary: 'Update successfully.',
             detail: `${order.menuItem.name} is updated status successfully!`,
             life: 3000
           });
+          this.cdr.detectChanges();
         },
         error: () => {
           this.messageService.add({
@@ -181,7 +207,7 @@ export class ManageKitchenOrdersComponent {
       header: 'Confirm change kitchen order status',
       icon: 'pi pi-question-circle',
       acceptLabel: 'Submit',
-      rejectLabel: 'Cancle',
+      rejectLabel: 'Cancel',
       acceptButtonStyleClass: 'p-button-warn',
       accept: () => {
         order.done = true;
@@ -202,6 +228,7 @@ export class ManageKitchenOrdersComponent {
           detail: `${order.menuItem.name} is updated status successfully!`,
           life: 3000
         });
+        this.cdr.detectChanges();
       },
       error: () => {
         this.messageService.add({

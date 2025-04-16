@@ -19,7 +19,6 @@
                 <th>Payment Method</th>
                 <th>Status</th>
                 <th>PaidAt</th>
-                <th style="width: 10%">Actions</th>
             </tr>
         </ng-template>
         <ng-template #body let-item let-rowIndex="rowIndex">
@@ -37,9 +36,6 @@
                 </td>
                 <td>
                     {{ item.getFormatDate() }}
-                </td>
-                <td>
-                    <p-button label="Refund" severity="info" />
                 </td>
             </tr>
         </ng-template>

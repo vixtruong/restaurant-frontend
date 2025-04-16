@@ -41,7 +41,7 @@
                     <p-button label="Done" severity="info" (onClick)="confirmDone(item)" />
                 </td>
                 <td class="flex justify-center" *ngIf="isKitchen">
-                    <p-select [options]="getAvailableOptions(item)" [(ngModel)]="item.tempStatus"
+                    <p-select [options]="getOptionsForOrder(item.id)" [(ngModel)]="item.tempStatus"
                         optionLabel="name" optionValue="value" placeholder="Select status"
                         class="w-full md:w-56"
                         (onChange)="confirmChangeStatus(item.tempStatus, item)" appendTo="body">
