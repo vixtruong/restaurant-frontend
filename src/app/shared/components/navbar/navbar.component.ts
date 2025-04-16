@@ -16,6 +16,7 @@ import { ConfirmationService } from 'primeng/api';
 import { MenuCategory } from '../../constants/menu.constants';
 import { OrderCartComponent } from "../../../features/customer/pages/order-cart/order-cart.component";
 import { ConfirmOrderComponent } from "../../../features/customer/pages/confirm-order/confirm-order.component";
+import { OrderService } from '../../../core/services/order.service';
 
 @Component({
   selector: 'app-navbar',
@@ -25,6 +26,7 @@ import { ConfirmOrderComponent } from "../../../features/customer/pages/confirm-
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
+  orderService = inject(OrderService);
   confirmationService = inject(ConfirmationService);
 
   categories = Object.entries(MenuCategory).map(([key, value]) => ({
@@ -68,7 +70,28 @@ export class NavbarComponent {
   }
 
   onExit() {
-    localStorage.clear();
-    window.location.reload();
+    const orderId = localStorage.getItem('orderId');
+  
+    if (orderId) {
+      this.orderService.handleEmptyOrderId(Number.parseInt(orderId)).subscribe({
+        next: () => {
+          console.log('Delete order empty successfully.');
+  
+          setTimeout(() => {
+            localStorage.clear();
+            window.location.reload();
+          }, 3000);
+        },
+        error: (err) => {
+          console.error('Error deleting empty order:', err);
+          localStorage.clear();
+          window.location.reload();
+        }
+      });
+    } else {
+      localStorage.clear();
+      window.location.reload();
+    }
   }
+  
 }

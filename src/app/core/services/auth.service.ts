@@ -45,38 +45,7 @@ export class AuthService {
   }
 
   login(loginRequest: LoginRequestDto) {
-    return this.http.post<any>(`${this.apiUrl}/login`, loginRequest).subscribe({
-      next: res => {
-        this.setAccessToken(res.accessToken);
-        localStorage.setItem('refreshToken', res.refreshToken);
-        console.log('✅ Log in Đăng nhập thành công');
-
-        const token = this.getAccessToken();
-
-        if (token) {
-          const payload = this.decodeJwt(token);
-
-          const userId = payload?.nameid;
-
-          localStorage.setItem('userId', userId);
-
-          const decoded: any = jwtDecode(token);
-          const role = decoded?.role;
-
-          localStorage.setItem('role', role);
-        }
-
-        if (token) {
-          this.router.navigate(['/admin']);
-        }
-        
-      },
-      error: err => {
-        console.log("Fail log in!", err);
-        alert('Đăng nhập thất bại. Vui lòng thử lại!');
-      },
-      complete: () => console.log('Complete login request')
-    });
+    return this.http.post<any>(`${this.apiUrl}/login`, loginRequest);
   }
   
   logout() {
@@ -98,28 +67,7 @@ export class AuthService {
   }
 
   customerEntry(data: EntryRequestDto) {
-    return this.http.post<any>(`${this.apiUrl}/entry`, data).subscribe({
-      next: (res) => {
-        localStorage.setItem('accessToken', res.accessToken);
-        localStorage.setItem('refreshToken', res.refreshToken);
-        localStorage.setItem('role', 'Customer');
-        console.log('✅ Đăng nhập thành công');
-
-        const payload = this.decodeJwt(res.accessToken);
-        const userId = payload?.nameid;
-
-        localStorage.setItem('userId', userId);
-
-        this.router.navigate(['/home']);
-      },
-      error: (err) => {
-        console.error('❌ Đăng nhập thất bại:', err);
-        alert('Đăng nhập thất bại. Vui lòng thử lại!');
-      },
-      complete: () => {
-        console.log('🔁 Hoàn tất xử lý entry request.');
-      }
-    });
+    return this.http.post<any>(`${this.apiUrl}/entry`, data);
   }
   
   isAuthenticated(): boolean {

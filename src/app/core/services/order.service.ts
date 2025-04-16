@@ -73,4 +73,8 @@ export class OrderService {
       return EMPTY;
     }
   }
+
+  handleEmptyOrderId(orderId: number): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/handle-empty/${orderId}`, orderId);
+  }
 }
