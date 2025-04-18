@@ -46,6 +46,8 @@ export class LoginComponent {
               this.authService.setAccessToken(res.accessToken);
               localStorage.setItem('refreshToken', res.refreshToken);
               console.log('✅ Log in Đăng nhập thành công');
+              console.log(res.accessToken);
+              console.log(res.refreshToken);
       
               const token = this.authService.getAccessToken();
       

@@ -8,7 +8,7 @@
 
         <ng-template #caption>
             <div class="flex items-center justify-between">
-                <span class="text-xl font-bold">Menu Items</span>
+                <span class="text-xl font-bold">Orders</span>
                 <p-select [options]="stateOptions" placeholder="Select" class="w-full md:w-56"
                     (onChange)="onOptionChange($event)">
                 </p-select>
@@ -47,7 +47,7 @@
                 <td>
                     {{ item.endAt | date:'dd/MM/yy HH:mm' }}
                 </td>
-                <td>
+                <td *ngIf="item.paymentRequest === true">
                     <p-button label="Create bill" severity="info"
                         (onClick)="confirmCreateBill(item, item.customerName)" />
                 </td>

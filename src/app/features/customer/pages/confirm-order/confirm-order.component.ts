@@ -15,6 +15,7 @@ import { KitchenOrderService } from '../../../../core/services/kitchen-order.ser
 import { KitchenOrder } from '../../../../core/models/kitchen-order.model';
 import { ConfirmOrderCardComponent } from "../../components/confirm-order-card/confirm-order-card.component";
 import { CartService } from '../../../../core/services/cart.service';
+import { OrderService } from '../../../../core/services/order.service';
 
 @Component({
   selector: 'app-confirm-order',
@@ -27,6 +28,7 @@ import { CartService } from '../../../../core/services/cart.service';
 export class ConfirmOrderComponent implements OnChanges {
   kitchenService = inject(KitchenOrderService);
   cartService = inject(CartService);
+  orderService = inject(OrderService);
 
   messageService = inject(MessageService);
   confirmationService = inject(ConfirmationService);
@@ -123,5 +125,31 @@ export class ConfirmOrderComponent implements OnChanges {
         });
       }
     });
+  }
+
+  handlePaymentRequest() {
+    var orderId = localStorage.getItem('orderId');
+    var tableNumber = localStorage.getItem('tableNumber');
+
+    if (orderId) {
+      this.orderService.paymentRequest(Number.parseInt(orderId)).subscribe({
+        next: () => {
+          this.messageService.add({
+            summary: "Request successful.",
+            detail: "Payment request have been seen.",
+            severity: "success",
+            life: 3000,
+          });
+        },
+        error: err => {
+          this.messageService.add({
+            summary: "Request fail.",
+            detail: `${err.message}`,
+            severity: "error",
+            life: 3000,
+          });
+        }
+      });
+    }
   }
 }

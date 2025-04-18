@@ -56,7 +56,7 @@ export class RevenueStatisticComponent {
           datasets: [{
             data: this.amounts,
             label: 'Revenue',
-            // borderWidth: 1
+            backgroundColor: '#42A5F5'
           }]
         };
       }

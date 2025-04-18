@@ -1,7 +1,8 @@
 import { HttpErrorResponse, HttpHandlerFn, HttpRequest } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { AuthService } from '../services/auth.service';
-import { catchError, switchMap, throwError } from 'rxjs';
+import { catchError, map, switchMap, throwError } from 'rxjs';
+import { jwtDecode } from 'jwt-decode';
 
 export const authInterceptor = (): ((req: HttpRequest<unknown>, next: HttpHandlerFn) => any) => {
   return (req: HttpRequest<unknown>, next: HttpHandlerFn) => {
@@ -30,9 +31,24 @@ export const authInterceptor = (): ((req: HttpRequest<unknown>, next: HttpHandle
         if (err.status === 401) {
           // Gọi refresh token
           return authService.refreshToken().pipe(
-            switchMap((token: string) => {
-              localStorage.setItem('accessToken', token);
-              return next(addToken(req, token));
+            switchMap((res: any) => {
+              localStorage.setItem('accessToken', res.accessToken);
+              localStorage.setItem('refreshToken', res.refreshToken);
+
+              if (res.accessToken) {
+                const payload = authService.decodeJwt(res.accessToken);
+      
+                const userId = payload?.nameid;
+      
+                localStorage.setItem('userId', userId);
+      
+                const decoded: any = jwtDecode(res.accessToken);
+                const role = decoded?.role;
+      
+                localStorage.setItem('role', role);
+              }
+              
+              return next(addToken(req, res.accessToken));
             }),
             catchError(err => {
               authService.logout();

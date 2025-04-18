@@ -35,6 +35,7 @@ export const authGuard: CanActivateFn = (route, state) => {
   return auth.refreshToken().pipe(
     switchMap(() => checkRoleAndReturn()),
     catchError(() => {
+      console.log("guard logout");
       auth.logout();
       return of(false);
     })
