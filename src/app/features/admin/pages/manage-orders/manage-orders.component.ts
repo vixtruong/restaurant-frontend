@@ -44,7 +44,7 @@ export class ManageOrdersComponent {
           if (a.status === 'Unpaid' && b.status !== 'Unpaid') return -1;
           if (a.status !== 'Unpaid' && b.status === 'Unpaid') return 1;
           return 0;
-        });;
+        });
         this.filterOrders = this.orders;
         console.log(this.orders);
       }

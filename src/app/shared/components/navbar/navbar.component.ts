@@ -80,7 +80,7 @@ export class NavbarComponent {
           setTimeout(() => {
             localStorage.clear();
             window.location.reload();
-          }, 3000);
+          }, 2000);
         },
         error: (err) => {
           console.error('Error deleting empty order:', err);

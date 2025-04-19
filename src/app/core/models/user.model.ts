@@ -6,6 +6,7 @@ export class User {
   roleName?: string;
   roleId?: number;
   joinTime: Date;
+  active?: boolean;
 
   constructor(data: Partial<User>) {
     this.id = data.id!;
@@ -15,5 +16,6 @@ export class User {
     this.roleName = data.roleName!;
     this.joinTime = data.joinTime!;
     this.roleId = data.roleId;
+    this.active = data.active;
   }
 }

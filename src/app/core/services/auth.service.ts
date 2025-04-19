@@ -34,25 +34,22 @@ export class AuthService {
     return this.http.post<any>(`${this.apiUrl}/refresh`, { refreshToken }).pipe(
       map((res: any) => {
         localStorage.setItem('accessToken', res.accessToken);
-              localStorage.setItem('refreshToken', res.refreshToken);
-              console.log("authInterceptor");
-              console.log(res.accessToken);
-              console.log(res.refreshToken);
+        localStorage.setItem('refreshToken', res.refreshToken);
 
-              if (res.accessToken) {
-                const payload = this.decodeJwt(res.accessToken);
-      
-                const userId = payload?.nameid;
-      
-                localStorage.setItem('userId', userId);
-      
-                const decoded: any = jwtDecode(res.accessToken);
-                const role = decoded?.role;
-      
-                localStorage.setItem('role', role);
-              }
+        if (res.accessToken) {
+          const payload = this.decodeJwt(res.accessToken);
 
-              return res;
+          const userId = payload?.nameid;
+
+          localStorage.setItem('userId', userId);
+
+          const decoded: any = jwtDecode(res.accessToken);
+          const role = decoded?.role;
+
+          localStorage.setItem('role', role);
+        }
+
+        return res.accessToken;
       })
     );
   }

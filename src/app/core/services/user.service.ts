@@ -29,4 +29,8 @@ export class UserService {
   deleteEmployees(id: number): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/delete/${id}`);
   }
+
+  toggleUserActiveStatusAsync(id: number): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/${id}/toggle-active`, id);
+  }
 }

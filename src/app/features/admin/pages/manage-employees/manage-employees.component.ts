@@ -30,15 +30,23 @@ export class ManageEmployeesComponent {
   @ViewChild('dt2', { static: false }) dt2!: Table;
 
   ngOnInit() {
+    this.loadUsers();
+  }
+
+  loadUsers() {
     this.userService.getAllEmployees().subscribe({
       next: data => {
-        this.users = data.map(user => new User(user));
-        console.log(this.users);
+        this.users = data.map(user => new User(user)).sort((a, b) => {
+          if (a.active === true && b.active !== true) return -1;
+          if (a.active !== true && b.active === true) return 1;
+          return 0;
+        });
       },
-      error: err => console.log(err),
-      complete: () => console.log('Load employees conpletely.')
+      error: err => console.error(err),
+      complete: () => console.log('Employees loaded.')
     });
   }
+  
 
   onGlobalSearch(event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -48,7 +56,41 @@ export class ManageEmployeesComponent {
     }
   }
 
-  confirmDelete(id: number) {
+  confirmToggleUserActiveStatus(user: User) {
+    var action = user.active ? 'deactivate' : 'activate'
 
+    this.confirmationService.confirm({
+      message: `Are you sure to ${action} user ${user.fullName}?`,
+      header: `Confirm ${action} user`,
+      icon: 'pi pi-question-circle',
+      acceptLabel: user.active ? 'Deactivate' : 'Activate',
+      rejectLabel: 'Cancle',
+      acceptButtonStyleClass: user.active ? 'p-button-warn' : 'p-button-info',
+      accept: () => {
+        this.toggleUserActive(user.id, user.active!);
+      }
+    });
+  }
+
+  toggleUserActive(id: number, currentActive: boolean) {
+    this.userService.toggleUserActiveStatusAsync(id).subscribe({
+      next: () => {
+        this.messageService.add({
+          severity: 'success',
+          summary: currentActive ? 'User deactivated' : 'User activated',
+          detail: `User #${id} is now ${currentActive ? 'inactive' : 'active'}.`,
+          life: 3000
+        });
+
+        this.loadUsers();
+      },
+      error: () => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Operation failed',
+          detail: `Could not update status for user #${id}.`
+        });
+      }
+    });
   }
 }
