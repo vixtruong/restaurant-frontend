@@ -35,6 +35,6 @@ export class MenuItemService {
   }
 
   deleteMenuItem(id: number): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/${id}`);
+    return this.http.delete<any>(`${this.apiUrl}/delete/${id}`);
   }  
 }

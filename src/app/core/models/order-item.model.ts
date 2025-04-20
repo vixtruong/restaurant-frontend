@@ -5,6 +5,7 @@ export class OrderItem {
     imgUrl: string;
     quantity: number;
     price: number;
+    notes?: String;
     confirmed: boolean = false;
     
   constructor(data: Partial<OrderItem> = {}) {
@@ -15,6 +16,7 @@ export class OrderItem {
     this.quantity = data.quantity ?? 1;
     this.price = data.price ?? 0;
     this.confirmed = data.confirmed ?? false;
+    this.notes = data.notes;
   }
 
   get totalPrice(): number {

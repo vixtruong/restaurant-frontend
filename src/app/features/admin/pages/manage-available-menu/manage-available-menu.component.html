@@ -27,7 +27,7 @@
         </ng-template>
         <ng-template #body let-product let-rowIndex="rowIndex">
             <tr>
-                <td>{{ dt2.first + rowIndex + 1 }}</td>
+                <td>{{ rowIndex + 1 }}</td>
                 <td>{{ product.name }}</td>
                 <td>
                     <img [src]="product.imgUrl" [alt]="product.name" class="w-24 rounded" />

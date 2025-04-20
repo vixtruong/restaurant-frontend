@@ -22,13 +22,14 @@
                 </th>
                 <th>Category</th>
                 <th>Quantity</th>
+                <th>Note</th>
                 <th class="flex justify-center" *ngIf="isKitchen">Status</th>
                 <th *ngIf="!isKitchen">Action</th>
             </tr>
         </ng-template>
         <ng-template #body let-item let-rowIndex="rowIndex">
             <tr [ngClass]="{'opacity-50 pointer-events-none text-gray-400': item.done}">
-                <td>{{ dt2.first + rowIndex + 1 }}</td>
+                <td>{{ rowIndex + 1 }}</td>
                 <td>{{ item.tableNumber }}</td>
                 <td>{{ item.menuItem.name }}</td>
                 <td>
@@ -36,6 +37,9 @@
                 </td>
                 <td>
                     {{ item.quantity }}
+                </td>
+                <td>
+                    {{ item.notes }}
                 </td>
                 <td *ngIf="!isKitchen">
                     <p-button label="Done" severity="info" (onClick)="confirmDone(item)" />

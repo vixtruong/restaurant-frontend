@@ -13,7 +13,6 @@ import { OrderService } from '../../../../core/services/order.service';
 import { OrderDto } from '../../../../core/dtos/order.dto';
 import { Router } from '@angular/router';
 import { PaymentService } from '../../../../core/services/payment.service';
-import { Payment } from '../../../../core/models/payment.model';
 
 @Component({
   selector: 'app-manage-orders',
@@ -41,7 +40,11 @@ export class ManageOrdersComponent {
   ngOnInit() {
     this.orderService.getAllOrders().subscribe({
       next: data => {
-        this.orders = data.map(item => new OrderDto(item));
+        this.orders = data.map(item => new OrderDto(item)).sort((a, b) => {
+          if (a.status === 'Unpaid' && b.status !== 'Unpaid') return -1;
+          if (a.status !== 'Unpaid' && b.status === 'Unpaid') return 1;
+          return 0;
+        });
         this.filterOrders = this.orders;
         console.log(this.orders);
       }

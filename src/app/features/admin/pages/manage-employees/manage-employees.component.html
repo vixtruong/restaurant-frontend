@@ -26,16 +26,22 @@
                 <th>Phone Number</th>
                 <th pSortableColumn="roleName">Role <p-sortIcon field="roleName" /></th>
                 <th pSortableColumn="joinTime">Join Time <p-sortIcon field="joinTime" /></th>
+                <th>Actions</th>
             </tr>
         </ng-template>
         <ng-template #body let-user let-rowIndex="rowIndex">
             <tr>
-                <td>{{ dt2.first + rowIndex + 1 }}</td>
+                <td>{{ rowIndex + 1 }}</td>
                 <td>{{ user.fullName }}</td>
                 <td>{{ user.email }}</td>
                 <td>{{ user.phoneNumber }}</td>
                 <td>{{ user.roleName }}</td>
                 <td>{{ user.joinTime | date: 'dd/MM/yyyy' }}</td>
+                <td>
+                    <p-button [label]='user.active ? "Deactivate" : "Activate"'
+                        [severity]='user.active ? "warn" : "info"'
+                        (onClick)="confirmToggleUserActiveStatus(user)" />
+                </td>
             </tr>
         </ng-template>
         <ng-template #footer>

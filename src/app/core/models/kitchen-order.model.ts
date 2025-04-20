@@ -7,6 +7,7 @@ export class KitchenOrder {
   menuItem: MenuItem;
   quantity: number;
   status: string;
+  notes?: string;
   tempStatus?: string;
   done?: boolean;
   cookAt?: Date;
@@ -19,5 +20,6 @@ export class KitchenOrder {
     this.menuItem = data.menuItem ?? new MenuItem();
     this.status = data.status ?? "";
     this.done = data.done;
+    this.notes = data.notes;
   }
 }

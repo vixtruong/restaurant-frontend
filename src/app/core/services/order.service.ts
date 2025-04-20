@@ -38,21 +38,18 @@ export class OrderService {
 
   createOrder(): Observable<any> {
     const orderId = localStorage.getItem('orderId');
-    const userId = localStorage.getItem('userId');
-    const tableNumber = localStorage.getItem('tableNumber');
 
     const cartData: OrderItem[] = this.cartService.getCart();
     const unconfirmedItems = cartData.filter(item => !item.confirmed);
 
     let orderItemDtos: OrderItemDto[] = unconfirmedItems.map(i => ({
       menuItemId: i.id,
-      quantity: i.quantity
+      quantity: i.quantity,
+      notes: i.notes,
     }));
 
-    if (orderItemDtos.length > 0 && userId && tableNumber) {
+    if (orderItemDtos.length > 0) {
       const orderRequest = new OrderRequestDto({
-        customerId: parseInt(userId),
-        tableNumber: parseInt(tableNumber),
         items: orderItemDtos,
         orderId: orderId ? parseInt(orderId) : undefined
       });
@@ -76,5 +73,9 @@ export class OrderService {
 
   handleEmptyOrderId(orderId: number): Observable<any> {
     return this.http.put<any>(`${this.apiUrl}/handle-empty/${orderId}`, orderId);
+  }
+
+  paymentRequest(orderId: number): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/payment-request/${orderId}`, orderId);
   }
 }

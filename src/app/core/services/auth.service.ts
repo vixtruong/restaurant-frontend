@@ -29,17 +29,27 @@ export class AuthService {
     return role!;
   }
   
-  refreshToken(): Observable<string> {
+  refreshToken(): Observable<any> {
     const refreshToken = localStorage.getItem('refreshToken');
     return this.http.post<any>(`${this.apiUrl}/refresh`, { refreshToken }).pipe(
       map((res: any) => {
         localStorage.setItem('accessToken', res.accessToken);
         localStorage.setItem('refreshToken', res.refreshToken);
+
+        if (res.accessToken) {
+          const payload = this.decodeJwt(res.accessToken);
+
+          const userId = payload?.nameid;
+
+          localStorage.setItem('userId', userId);
+
+          const decoded: any = jwtDecode(res.accessToken);
+          const role = decoded?.role;
+
+          localStorage.setItem('role', role);
+        }
+
         return res.accessToken;
-      }),
-      catchError(err => {
-        // this.logout();
-        return throwError(() => err);
       })
     );
   }

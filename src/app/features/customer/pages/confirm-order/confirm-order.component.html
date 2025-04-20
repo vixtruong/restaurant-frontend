@@ -24,6 +24,8 @@
     <div class="fixed bottom-0 right-0 bg-white w-full p-4 z-10">
         <div class="flex justify-between items-center">
             <span class="font-semibold text-gray-700">Total: {{ totalPrice }}</span>
+            <p-button label="Payment request" severity="info" (onClick)="handlePaymentRequest()" />
         </div>
+
     </div>
 </p-drawer>

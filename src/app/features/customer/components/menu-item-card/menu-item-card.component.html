@@ -1,10 +1,10 @@
 <p-card *ngIf="item.available" [style]="{ overflow: 'hidden' }">
     <ng-template #header>
-        <img alt="Card" class="w-full h-50.5" src="{{item.imgUrl}}" />
+        <img alt="Card" src="{{ item.imgUrl }}" class="w-[350px] h-[200px] object-cover" />
     </ng-template>
     <ng-template #title> {{item.name}} </ng-template>
     <ng-template #subtitle> {{item.category}}</ng-template>
-    <p>
+    <p class="truncate text-sm">
         {{item.description}}
     </p>
     <p style="font-weight: 600;">

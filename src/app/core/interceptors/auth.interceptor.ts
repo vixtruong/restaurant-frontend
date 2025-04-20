@@ -5,6 +5,13 @@ import { catchError, switchMap, throwError } from 'rxjs';
 
 export const authInterceptor = (): ((req: HttpRequest<unknown>, next: HttpHandlerFn) => any) => {
   return (req: HttpRequest<unknown>, next: HttpHandlerFn) => {
+
+    const isCloudinary = req.url.includes('api.cloudinary.com');
+
+    if (isCloudinary) {
+      return next(req);
+    }
+
     const authService = inject(AuthService);
 
     // Bỏ qua URL login, register, refresh
@@ -30,9 +37,8 @@ export const authInterceptor = (): ((req: HttpRequest<unknown>, next: HttpHandle
         if (err.status === 401) {
           // Gọi refresh token
           return authService.refreshToken().pipe(
-            switchMap((token: string) => {
-              localStorage.setItem('accessToken', token);
-              return next(addToken(req, token));
+            switchMap((accessToken: any) => {
+              return next(addToken(req, accessToken));
             }),
             catchError(err => {
               authService.logout();

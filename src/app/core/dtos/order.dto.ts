@@ -7,6 +7,7 @@ export class OrderDto {
   totalPrice: number;
   createdAt: Date;
   endAt?: Date;
+  paymentRequest?: boolean;
 
   constructor(data: Partial<OrderDto>) {
     this.id = data.id ?? 0;
@@ -17,5 +18,6 @@ export class OrderDto {
     this.totalPrice = data.totalPrice ?? 0;
     this.createdAt = data.createdAt ?? new Date();
     this.endAt = data.endAt;
+    this.paymentRequest = data.paymentRequest;
   }
 }
