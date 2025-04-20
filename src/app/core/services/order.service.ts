@@ -44,7 +44,8 @@ export class OrderService {
 
     let orderItemDtos: OrderItemDto[] = unconfirmedItems.map(i => ({
       menuItemId: i.id,
-      quantity: i.quantity
+      quantity: i.quantity,
+      notes: i.notes,
     }));
 
     if (orderItemDtos.length > 0) {

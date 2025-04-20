@@ -1,4 +1,4 @@
-<div class="flex items-center gap-4 w-full"
+<div class="flex items-start gap-4 w-full"
     [ngClass]="{ 'opacity-50 pointer-events-none': disabled }">
     <img class="w-14 h-14 object-cover rounded-md border border-gray-300" [src]="orderItem.imgUrl"
         [alt]="orderItem.name" />
@@ -17,9 +17,40 @@
             <button class="px-2 bg-gray-200 rounded hover:bg-gray-300 text-sm"
                 (click)="increaseQuantity()">+</button>
         </div>
+
+        <!-- ✏️ Icon để mở note -->
+        <button class="flex items-center text-xs text-blue-500 mt-1 hover:underline w-fit"
+            (click)="openNoteModal()">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-1" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M15.232 5.232l3.536 3.536M9 11l6-6m2 2l-6 6M3 21h18" />
+            </svg>
+            Thêm ghi chú
+        </button>
+
+        <!-- 📝 Hiển thị ghi chú hiện có -->
+        <span *ngIf="orderItem.notes" class="text-xs text-gray-500 italic mt-1 truncate">"{{
+            orderItem.notes }}"</span>
     </div>
 
-    <span class="text-sm font-bold text-gray-800 whitespace-nowrap">
-        {{ (orderItem.quantity*orderItem.price).toLocaleString('vi-VN') }}₫
+    <span class="text-sm font-bold text-gray-800 whitespace-nowrap self-start">
+        {{ (orderItem.quantity * orderItem.price).toLocaleString('vi-VN') }}₫
     </span>
+</div>
+
+<div *ngIf="isNoteModalOpen"
+    class="fixed inset-0 bg-white/20 backdrop-blur-[2px] flex items-center justify-center z-50">
+
+    <div class="bg-white rounded-lg shadow-lg w-11/12 max-w-md p-4">
+        <h2 class="text-sm font-semibold mb-2">Enter note for {{ orderItem.name }}</h2>
+        <textarea [(ngModel)]="tempNote" rows="3"
+            class="w-full p-2 text-sm border rounded focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none"></textarea>
+        <div class="flex justify-end gap-2 mt-3">
+            <button (click)="cancelNote()"
+                class="text-gray-600 text-sm hover:underline">Cancel</button>
+            <button (click)="saveNote()"
+                class="bg-blue-500 text-white text-sm px-3 py-1 rounded hover:bg-blue-600">Save</button>
+        </div>
+    </div>
 </div>

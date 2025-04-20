@@ -5,6 +5,13 @@ import { catchError, switchMap, throwError } from 'rxjs';
 
 export const authInterceptor = (): ((req: HttpRequest<unknown>, next: HttpHandlerFn) => any) => {
   return (req: HttpRequest<unknown>, next: HttpHandlerFn) => {
+
+    const isCloudinary = req.url.includes('api.cloudinary.com');
+
+    if (isCloudinary) {
+      return next(req);
+    }
+
     const authService = inject(AuthService);
 
     // Bỏ qua URL login, register, refresh

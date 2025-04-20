@@ -47,6 +47,16 @@ export class CartService {
     }
   }
 
+  updateNote(id: number, note: string) {
+    const cart = this.getCart();
+    const item = cart.find(i => i.id === id);
+    if (item) {
+      item.notes = note;
+      this.saveCart(cart);
+      this._cart.next(cart);
+    }
+  }
+  
   removeItem(itemId: number) {
     const updated = this.getCart().filter(i =>
       i.id !== itemId || i.confirmed === true
