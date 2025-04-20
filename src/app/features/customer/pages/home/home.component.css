@@ -1,7 +1,15 @@
-.container {
-  background-color: #fff;
+.fixed-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: 100%;
+  z-index: 1000; /* Đảm bảo navbar nằm trên các phần tử khác */
+  background-color: #fff; /* Màu nền, tùy chỉnh theo thiết kế */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Hiệu ứng bóng nhẹ */
+}
+
+.content-container {
+  margin-top: 100px; /* Khoảng cách để nội dung không bị che bởi navbar, điều chỉnh theo chiều cao navbar */
 }
 
 h3 {
