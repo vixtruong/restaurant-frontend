@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MenuModule } from 'primeng/menu';
 import { RouterModule } from '@angular/router';
@@ -14,64 +14,66 @@ export class SlidebarComponent {
 
   items = [
     {
-      label: 'Trang chủ',
+      label: 'Home',
       items: [
-        { label: 'Dashboard', icon: 'pi pi-home', route: '/admin'}
+        { label: 'Dashboard', icon: 'pi pi-home', route: '/admin' }
       ]
     },
     {
-      label: 'Đơn hàng',
+      label: 'Orders',
       items: [
-        { label: 'Quản lý thực đơn khách đặt', icon: 'pi pi-check-square', route: '/admin/kitchen-orders' },
-        { label: 'Quản lý đơn hàng', icon: 'pi pi-box', route: '/admin/orders' },
+        { label: 'Manage Customer Orders', icon: 'pi pi-check-square', route: '/admin/kitchen-orders' },
+        { label: 'Manage Orders', icon: 'pi pi-box', route: '/admin/orders' }
       ]
     },
     {
-      label: 'Món ăn',
+      label: 'Menu',
       items: [
-        { label: 'Quản lý món ăn', icon: 'pi pi-cog', route: '/admin/menu-items' },
-        { label: 'Thêm món ăn', icon: 'pi pi-plus-circle', route: '/admin/menu-items/add' }
+        { label: 'Manage Menu Items', icon: 'pi pi-cog', route: '/admin/menu-items' },
+        { label: 'Add Menu Item', icon: 'pi pi-plus-circle', route: '/admin/menu-items/add' }
       ]
     },
     {
-      label: 'Bếp',
+      label: 'Kitchen',
       items: [
-        { label: 'Quản lý thực đơn khách đặt', icon: 'pi pi-check-square', route: '/admin/kitchen-orders' },
-        { label: 'Cập nhật món ăn', icon: 'pi pi-refresh', route: '/admin/kitchen-orders/manage-available-menu' },
+        { label: 'Manage Customer Orders', icon: 'pi pi-check-square', route: '/admin/kitchen-orders' },
+        { label: 'Update Available Dishes', icon: 'pi pi-refresh', route: '/admin/kitchen-orders/manage-available-menu' }
       ]
     },
     {
-      label: 'Nhân viên',
+      label: 'Employees',
       items: [
-        { label: 'Quản lý nhân viên', icon: 'pi pi-user-edit', route: '/admin/employees' },
-        { label: 'Thêm nhân viên', icon: 'pi pi-user-plus', route: '/admin/employees/add' }
+        { label: 'Manage Employees', icon: 'pi pi-user-edit', route: '/admin/employees' },
+        { label: 'Add Employee', icon: 'pi pi-user-plus', route: '/admin/employees/add' }
       ]
     },
     {
-      label: 'Thống kê',
+      label: 'Reports',
       items: [
-        { label: 'Quản lý thanh toán', icon: 'pi pi-dollar', route: '/admin/revenue' },
-        { label: 'Thống kê thanh toán', icon: 'pi pi-chart-bar', route: '/admin/revenue/statistic' },
-        { label: 'Xuất thống kê', icon: 'pi pi pi-file', route: '/admin/revenue/export' },
+        { label: 'Manage Payments', icon: 'pi pi-dollar', route: '/admin/revenue' },
+        { label: 'Payment Statistics', icon: 'pi pi-chart-bar', route: '/admin/revenue/statistic' },
+        { label: 'Export Reports', icon: 'pi pi-file', route: '/admin/revenue/export' }
       ]
     }
   ];
+  
   
   ngOnInit() {
     const role = localStorage.getItem('role');
     this.role = role!;
   
     if (this.role === 'Quản lý') {
-      this.items = this.items.filter(item => item.label !== 'Bếp');
+      this.items = this.items.filter(item => item.label !== 'Kitchen');
     }
-  
+    
     if (this.role === 'Nhân viên bếp') {
-      this.items = this.items.filter(item => item.label === 'Trang chủ' || item.label === 'Bếp');
+      this.items = this.items.filter(item => item.label === 'Home' || item.label === 'Kitchen');
     }
-  
+    
     if (this.role === 'Bồi bàn') {
-      this.items = this.items.filter(item => item.label === 'Trang chủ' || item.label === 'Đơn hàng');
+      this.items = this.items.filter(item => item.label === 'Home' || item.label === 'Orders');
     }
+    
   }
   
 }

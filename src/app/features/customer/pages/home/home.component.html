@@ -1,16 +1,18 @@
-<app-navbar (searchQueryEvent)="onInputSearchQuery($event)"
+<app-navbar class="fixed-navbar" (searchQueryEvent)="onInputSearchQuery($event)"
     (categorySelectEvent)="onCategoryChange($event)">
 </app-navbar>
 
-<h2 class="text-2xl font-bold text-center my-4">Menu List</h2>
+<div class="content-container">
+    <h2 class="text-2xl font-bold text-center my-4">Menu List</h2>
 
-<div class="p-4 pl-20 pr-20">
-    <ng-container *ngFor="let group of groupedMenuItems; trackBy: trackByCategory">
-        <h3 class="text-xl font-semibold my-4">{{ group.category }}</h3>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 justify-center p-2">
-            <ng-container *ngFor="let item of group.items; trackBy: trackByItem">
-                <app-menu-item-card class="mx-auto" [item]="item"></app-menu-item-card>
-            </ng-container>
-        </div>
-    </ng-container>
+    <div class="p-4 pl-20 pr-20">
+        <ng-container *ngFor="let group of groupedMenuItems; trackBy: trackByCategory">
+            <h3 class="text-xl font-semibold my-4">{{ group.category }}</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 justify-center p-2">
+                <ng-container *ngFor="let item of group.items; trackBy: trackByItem">
+                    <app-menu-item-card class="mx-auto" [item]="item"></app-menu-item-card>
+                </ng-container>
+            </div>
+        </ng-container>
+    </div>
 </div>
