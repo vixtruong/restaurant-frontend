@@ -37,7 +37,7 @@ export const routes: Routes = [
       { path: 'menu-items/update/:id', component: UpdateMenuItemComponent, canActivate: [authGuard], data: { roles: ['Quản lý']} },
       { path: 'employees', component: ManageEmployeesComponent, canActivate: [authGuard], data: { roles: ['Quản lý']} },
       { path: 'employees/add', component: AddEmployeeComponent, canActivate: [authGuard], data: { roles: ['Quản lý']} },
-      { path: 'kitchen-orders', component: ManageKitchenOrdersComponent, canActivate: [authGuard], data: { roles: ['Quản lý', 'Nhân viên bếp']} },
+      { path: 'kitchen-orders', component: ManageKitchenOrdersComponent, canActivate: [authGuard], data: { roles: ['Quản lý', 'Nhân viên bếp', 'Bồi bàn']} },
       { path: 'kitchen-orders/manage-available-menu', component: ManageAvailableMenuComponent, canActivate: [authGuard], data: { roles: ['Quản lý', 'Nhân viên bếp']} },
       { path: 'orders', component: ManageOrdersComponent, canActivate: [authGuard], data: { roles: ['Quản lý', 'Bồi bàn']} },
       { path: 'invoice/:orderId', component: InvoiceComponent, canActivate: [authGuard], data: { roles: ['Quản lý', 'Bồi bàn']} },
