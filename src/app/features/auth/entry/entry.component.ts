@@ -7,16 +7,19 @@ import { InputTextModule } from 'primeng/inputtext';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { ToastModule } from 'primeng/toast';
+import { DropdownModule } from 'primeng/dropdown';
 
 import { MessageService } from 'primeng/api';
 
 import { AuthService } from '../../../core/services/auth.service';
 import { EntryRequestDto } from '../../../core/dtos/entry-request.dto';
+import { Table } from '../../../core/models/table.model';
+import { OrderService } from '../../../core/services/order.service';
+import { FloatLabelModule } from "primeng/floatlabel";
 
-  
 @Component({
   selector: 'app-entry',
-  imports: [CommonModule, InputTextModule, CardModule, ButtonModule, ReactiveFormsModule, ToastModule],
+  imports: [CommonModule, InputTextModule, CardModule, ButtonModule, ReactiveFormsModule, ToastModule, DropdownModule, FloatLabelModule],
   providers: [MessageService],
   templateUrl: './entry.component.html',
   styleUrl: './entry.component.css'
@@ -26,6 +29,9 @@ export class EntryComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
   private messageService = inject(MessageService);
+  private orderService = inject(OrderService);
+
+  tables: Table[] = [];
 
   constructor(private fb: FormBuilder) {
     this.entryForm = fb.group({
@@ -39,6 +45,25 @@ export class EntryComponent {
     if (this.authService.isAuthenticated()) {
       this.router.navigate(['/home']);
     }
+
+    this.loadTables();
+  }
+
+  loadTables() {
+    this.orderService.getAllTables().subscribe({
+      next: data => {
+        this.tables = data.map(item => new Table(item)).filter(table => table.available);
+      },
+      error: err => {
+        console.error('Load tables fail:', err);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Load fail.',
+          detail: `Tables is null`,
+          life: 3000
+        });
+      }
+    });
   }
 
   preventNonNumericInput(event: KeyboardEvent) {
