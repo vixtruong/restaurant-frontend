@@ -25,10 +25,11 @@
                     </small>
                 </div>
                 <div class="flex flex-col gap-1 mb-4">
-                    <label for="tableNumber">Table Number</label>
-                    <input pInputText id="tableNumber" formControlName="tableNumber" type="text"
-                        maxlength="10" pattern="[0-9]*"
-                        (keypress)="preventNonNumericInput($event)" />
+                    <label for="table">Table</label>
+                    <p-floatLabel class="w-full">
+                        <p-dropdown inputId="table" formControlName="tableNumber" [options]="tables"
+                            optionLabel="number" optionValue="number" option styleClass="w-full" />
+                    </p-floatLabel>
                     <small
                         *ngIf="entryForm.get('tableNumber')?.invalid && entryForm.get('tableNumber')?.touched"
                         class="text-red-500">
