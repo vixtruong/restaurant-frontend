@@ -20,6 +20,12 @@ export class SlidebarComponent {
       ]
     },
     {
+      label: 'Tables',
+      items: [
+        { label: 'Manage tables', icon: 'pi pi-table', route: '/admin/tables' }
+      ]
+    },
+    {
       label: 'Orders',
       items: [
         { label: 'Manage Customer Orders', icon: 'pi pi-check-square', route: '/admin/kitchen-orders' },

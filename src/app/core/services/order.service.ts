@@ -9,6 +9,7 @@ import { OrderItem } from '../models/order-item.model';
 import { OrderDto } from '../dtos/order.dto';
 import { OrderDetailDto } from '../dtos/order-detail.dto';
 import { Table } from '../models/table.model';
+import { TableDto } from '../dtos/table.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -25,8 +26,8 @@ export class OrderService {
     return this.http.get<OrderDto[]>(this.apiUrl);
   }
 
-  getAllTables(): Observable<Table[]> {
-    return this.http.get<Table[]>(`${this.apiUrl}/tables`);
+  getAllTables(): Observable<TableDto[]> {
+    return this.http.get<TableDto[]>(`${this.apiUrl}/tables`);
   }
 
   getOrderDetail(orderId: number): Observable<OrderDetailDto> {

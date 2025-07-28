@@ -18,6 +18,7 @@ import { RevenueComponent } from './features/admin/pages/revenue/revenue.compone
 import { RevenueStatisticComponent } from './features/admin/pages/revenue-statistic/revenue-statistic.component';
 import { RevenueExportComponent } from './features/admin/pages/revenue-export/revenue-export.component';
 import { authGuard } from './core/guards/auth.guard';
+import { ManageTableComponent } from './features/admin/pages/manage-table/manage-table.component';
 
 export const routes: Routes = [
   {path: 'entry', component: EntryComponent},
@@ -44,6 +45,7 @@ export const routes: Routes = [
       { path: 'revenue', component: RevenueComponent, canActivate: [authGuard], data: { roles: ['Quản lý']} },
       { path: 'revenue/statistic', component: RevenueStatisticComponent, canActivate: [authGuard], data: { roles: ['Quản lý']} },
       { path: 'revenue/export', component: RevenueExportComponent, canActivate: [authGuard], data: { roles: ['Quản lý']} },
+      { path: 'tables', component: ManageTableComponent, canActivate: [authGuard], data: { roles: ['Quản lý'] } }
     ],
   }
 ];

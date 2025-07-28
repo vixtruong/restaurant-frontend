@@ -1,0 +1,11 @@
+::ng-deep .unavailable-table .p-card {
+  background-color: #fef2f2;
+  border-left: 4px solid #b91c1c;
+  color: #b91c1c;
+}
+
+::ng-deep .available-table .p-card {
+  background-color: #ecfdf5;
+  border-left: 4px solid #047857;
+  color: #047857;
+}
