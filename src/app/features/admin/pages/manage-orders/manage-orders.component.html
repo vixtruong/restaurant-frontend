@@ -23,7 +23,7 @@
                 <th pSortableColumn="status">Status <p-sortIcon field="status" /></th>
                 <th pSortableColumn="createdAt">Create At <p-sortIcon field="createdAt" /></th>
                 <th>End At</th>
-                <th style="width: 15%">Actions</th>
+                <!-- <th style="width: 15%">Actions</th> -->
             </tr>
         </ng-template>
         <ng-template #body let-item let-rowIndex="rowIndex">
@@ -47,10 +47,10 @@
                 <td>
                     {{ item.endAt | date:'dd/MM/yy HH:mm' }}
                 </td>
-                <td *ngIf="item.paymentRequest === true">
+                <!-- <td *ngIf="item.paymentRequest === true">
                     <p-button label="Create bill" severity="info"
                         (onClick)="confirmCreateBill(item, item.customerName)" />
-                </td>
+                </td> -->
             </tr>
         </ng-template>
         <ng-template #footer>

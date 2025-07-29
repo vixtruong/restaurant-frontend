@@ -1,0 +1,34 @@
+<!-- UNAVAILABLE TABLES -->
+<div class="rounded-xl p-6 bg-white">
+    <span class="text-xl font-bold block mb-4">Unavailable Tables</span>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+        <div *ngFor="let table of unavailableTables"
+            class="transition-all duration-200 hover:scale-[1.02] hover:bg-red-500/10 hover:shadow-lg cursor-pointer"
+            (click)="onUnavailableTableClick(table.id, table.orderId!)">
+            <p-card [header]="'Table ' + table.number" class="unavailable-table">
+                <p class="m-0 text-red-600 font-semibold">
+                    Status: Occupied
+                </p>
+                <p class="text-sm text-gray-600">
+                    Booked by: {{ table.bookedBy }}
+                </p>
+            </p-card>
+        </div>
+
+    </div>
+</div>
+
+<!-- AVAILABLE TABLES -->
+<div class="rounded-xl p-6 bg-white mt-4">
+    <span class="text-xl font-bold block mb-4">Available Tables</span>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+        <p-card *ngFor="let table of availableTables" [header]="'Table ' + table.number"
+            class="available-table">
+            <p class="m-0 text-green-700 font-semibold">
+                Status: Available
+            </p>
+        </p-card>
+    </div>
+</div>

@@ -79,23 +79,4 @@ export class ManageOrdersComponent {
            d1.getMonth() === d2.getMonth() &&
            d1.getFullYear() === d2.getFullYear();
   }
-  
-
-  confirmCreateBill(order: OrderDto, customerName: string) {
-    this.confirmationService.confirm({
-      message: `Are you sure to create transaction for ${customerName}?`,
-      header: 'Confirm create transaction',
-      icon: 'pi pi-question-circle',
-      acceptLabel: 'Create',
-      rejectLabel: 'Cancle',
-      acceptButtonStyleClass: 'p-button-info',
-      accept: () => {
-        this.createBill(order);
-      }
-    });
-  }
-
-  createBill(order: OrderDto) {
-    this.router.navigate(['/admin/invoice', order.id]);
-  }
 }
