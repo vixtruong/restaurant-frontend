@@ -1,7 +1,14 @@
 <div class="rounded-xl p-6 bg-white">
-    <span class="text-xl font-bold block mb-4">
-        Table {{ tableNumber }} Detail
-    </span>
+    <p-toast />
+    <p-confirmdialog />
+    <div class="flex justify-between">
+        <span class="text-xl font-bold block mb-4">
+            Table {{ tableNumber }} Detail
+        </span>
+        <p-button *ngIf="orderDetail && orderDetail.orderItems.length > 0" label="Print invoice"
+            icon="pi pi-print" severity="warn" (onClick)="confirmCreateBill()" />
+
+    </div>
 
     <ng-container *ngIf="orderDetail && orderDetail.orderItems.length > 0; else noOrder">
         <div class="mb-4 space-y-1">
@@ -37,4 +44,5 @@
     <ng-template #noOrder>
         <p class="text-red-500 font-medium mt-4">No order available for this table.</p>
     </ng-template>
+
 </div>
