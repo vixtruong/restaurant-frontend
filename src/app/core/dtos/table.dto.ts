@@ -2,6 +2,7 @@ export class TableDto {
   readonly id: number;
   number: number;
   available: boolean;
+  orderId?: number;
   bookedBy?: string;
 
   constructor(data: Partial<TableDto>) {
@@ -12,6 +13,7 @@ export class TableDto {
     this.id = data.id;
     this.number = data.number;
     this.available = data.available ?? false;
+    this.orderId = data.orderId;
     this.bookedBy = data.bookedBy;
   }
 

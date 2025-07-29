@@ -36,6 +36,25 @@ export class LoginComponent {
     );
   }
 
+  ngOnInit(): void {
+    const token = this.authService.getAccessToken();
+
+    if (token && this.authService.isAuthenticated()) {
+      const role = this.authService.getUserRole();
+
+      switch (role) {
+        case 'Quản lý':
+          this.router.navigate(['/admin/dashboard']);
+          break;
+        case 'Customer':
+          this.router.navigate(['/home']);
+          break;
+        default:
+          this.router.navigate(['/']);
+      }
+    }
+  }
+
   onSubmit() {
     if (this.loginForm.valid) {
       const { email, password} = this.loginForm.value;

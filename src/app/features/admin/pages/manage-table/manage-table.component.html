@@ -3,15 +3,19 @@
     <span class="text-xl font-bold block mb-4">Unavailable Tables</span>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-        <p-card *ngFor="let table of unavailableTables" [header]="'Table ' + table.number"
-            class="unavailable-table">
-            <p class="m-0 text-red-600 font-semibold">
-                Status: Occupied
-            </p>
-            <p class="text-sm text-gray-600">
-                Booked by: {{ table.bookedBy }}
-            </p>
-        </p-card>
+        <div *ngFor="let table of unavailableTables"
+            class="transition-all duration-200 hover:scale-[1.02] hover:bg-red-500/10 hover:shadow-lg cursor-pointer"
+            (click)="onUnavailableTableClick(table.id, table.orderId!)">
+            <p-card [header]="'Table ' + table.number" class="unavailable-table">
+                <p class="m-0 text-red-600 font-semibold">
+                    Status: Occupied
+                </p>
+                <p class="text-sm text-gray-600">
+                    Booked by: {{ table.bookedBy }}
+                </p>
+            </p-card>
+        </div>
+
     </div>
 </div>
 

@@ -3,6 +3,7 @@ export class OrderDetailDto {
   customerId: number;
   customerName: string;
   tableNumber: number;
+  isPaid: boolean;
   orderItems: OrderItemDetailDto[];
 
   constructor(data: Partial<OrderDetailDto>) {
@@ -11,6 +12,7 @@ export class OrderDetailDto {
     this.customerName = data.customerName ?? "",
     this.tableNumber = data.tableNumber ?? 0,
     this.orderItems = data.orderItems ?? []
+    this.isPaid = data.isPaid ?? false;
   }
 }
 
